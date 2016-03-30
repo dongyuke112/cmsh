@@ -13,5 +13,7 @@ return array(
     // 0 (普通模式); 1 (PATHINFO 模式); 2 (REWRITE  模式); 3 (兼容模式)  默认为PATHINFO 模式
     'URL_ROUTER_ON'          => true, // 是否开启URL路由
     'URL_ROUTE_RULES'        => [], // 默认路由规则 针对模块
+    'LAYOUT_ON' => true, // 打开layout功能
+
 
 );
