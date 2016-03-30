@@ -7,10 +7,36 @@
 .ye_first_div
 {
     width:210px;
-    height: 465px;
+    height: 455px;
     position:absolute;left:105px;top:175px;
     border: 1px solid red;
+    font-size: 15px;
 }
-.ye_first_ul{
-    list-style-type: none;
+.ye_first_div div
+{
+    width: 210px;
+    height: 35px;
+    background-color: rgb(220,22,35);
+
 }
+.ye_first_div div a
+{
+    margin-left: 5px;
+    color:whitesmoke;
+    font-family:Arial,Helvetica,sans-serif;font-size:100%;
+   text-decoration: none;
+    width: 200px;
+}
+.ye_first_div div
+{
+    color:whitesmoke;
+}
+.ye_image_show
+{
+    width: 730px;
+    height: 445px;
+    position:absolute;left:330px;top:185px;
+    border: 1px solid red;
+}
+
+
