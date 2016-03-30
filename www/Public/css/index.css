@@ -1,0 +1,16 @@
+.ye_body
+{
+    width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.ye_first_div
+{
+    width:210px;
+    height: 465px;
+    position:absolute;left:105px;top:175px;
+    border: 1px solid red;
+}
+.ye_first_ul{
+    list-style-type: none;
+}
