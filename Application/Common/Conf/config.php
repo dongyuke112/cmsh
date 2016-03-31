@@ -16,7 +16,7 @@ return array(
     'LAYOUT_ON' => true, // 打开layout功能
     'SHOW_PAGE_TRACE' => true,
     'TMPL_PARSE_STRING' =>[
-        "IMAGE_PATH"=>'/public/images/',
+        "IMAGE_PATH"=>'/public/images',
     ]
 
 
