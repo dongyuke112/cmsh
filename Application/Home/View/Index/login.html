@@ -1,0 +1,36 @@
+<style type="text/css">
+    .login
+    {
+        margin-top: 50px;
+    }
+</style>
+<include file="../Application/Home/view/daohangtiao.html" />
+<div class="row login">
+    <div class="panel col-md-8 col-md-offset-2 ">
+        <div class="panel-heading"><div class="col-md-3">登录</div><div class="col-md-3 col-md-offset-6">没有帐号去<a href="/home/index/regiest">注册</a></div></div>
+        <div class="panel-body">
+            <form action="/home/index/loginckeck" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-3" >用户名</label>
+                    <div class="col-md-9">
+                        <input name="username" type="text" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" >密码</label>
+                    <div class="col-md-9">
+                        <input name="psaaword" type="password" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" ></label>
+                    <div class="col-md-9">
+                        <input type="submit" value="提交" class="form-control"/>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>

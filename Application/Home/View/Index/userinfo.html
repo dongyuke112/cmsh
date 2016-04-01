@@ -1,0 +1,104 @@
+<include file="../Application/Home/view/daohangtiao.html" />
+<div class="row">
+    <div class="panel col-md-8 col-md-offset-2">
+        <div class="panel-heading">完善用户信息</div>
+        <div class="panel-body">
+            <form action="/home/index/userinfosave" method="post" class="form-horizontal" data-toggle="validator">
+                <input type="hidden" name="user_id" value="{:lt_id()}"/>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">姓名</label>
+                    <div class="col-md-8">
+                        <input type="text"name="name" class="form-control" required="required" placeholder="输入姓名"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">性别</label>
+                    <div class="col-md-8">
+                        <select name="gender" class="form-control">
+                            <option selected="selected" value="M">男</option>
+                            <option  value="F">女</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">生日</label>
+                    <div class="col-md-8">
+                        <input type="text" name="birthday" class="form-control" id="demo" required="required" placeholder="点击输入生日">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">手机号码</label>
+                    <div class="col-md-8">
+                        <input type="text" name="mobile" class="form-control"  required="required" placeholder="输入手机号码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">邮箱</label>
+                    <div class="col-md-8">
+                        <input type="email" name="email" class="form-control"  required="required" placeholder="输入有效的邮箱">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">个性签名</label>
+                    <div class="col-md-8">
+                        <textarea name="sign" class="form-control" placeholder="输入个性签名"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">密保问题</label>
+                    <div class="col-md-8">
+                        <select name="problem_id1" class="form-control">
+                            <volist name="result" id="items">
+                                <option value="{$items.id}">{$items.problem}</option>
+                            </volist>
+
+                        </select>
+                    </div>
+                    <div class="col-md-8 col-md-offset-3">
+                       <input type="text" name="problem1" class="form-control" required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">密保问题</label>
+                    <div class="col-md-8">
+                        <select name="problem_id2" class="form-control">
+                            <volist name="result" id="items">
+                                <option value="{$items.id}">{$items.problem}</option>
+                            </volist>
+                        </select>
+                    </div>
+                    <div class="col-md-8 col-md-offset-3">
+                        <input type="text" name="problem2" class="form-control" required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">密保问题</label>
+                    <div class="col-md-8">
+                        <select name="problem_id3" class="form-control">
+                            <volist name="result" id="items" class="form-control">
+                                <option value="{$items.id}">{$items.problem}</option>
+                            </volist>
+                        </select>
+                    </div>
+                    <div class="col-md-8 col-md-offset-3">
+                        <input type="text" name="problem3" class="form-control" required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8 col-md-offset-3">
+                        <input  type="submit" value="保存" class="form-control" required="required"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#demo").datetimepicker({
+        dayOfWeekStart:1,
+        timepicker:false,
+        format:"Y-m-d"
+
+    });
+    $.datetimepicker.setLocale('zh');
+</script>

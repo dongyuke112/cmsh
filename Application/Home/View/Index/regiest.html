@@ -1,0 +1,77 @@
+<style type="text/css">
+    .regiest
+    {
+        margin-top: 50px;
+    }
+</style>
+<include file="../Application/Home/view/daohangtiao.html" />
+<div class="row regiest">
+    <div class="panel col-md-8 col-md-offset-2">
+        <div class="panel-heading "><div class="col-md-3">网易通行证注册</div><div class="col-md-3 col-md-offset-6">已有帐号去<a href="/home/index/login">登录</a></div></div>
+        <div class="panel-body">
+            <form action="/home/index/regiestsave" class="form-horizontal" method="post" data-toggle="validator">
+                <div class="form-group">
+                    <label class="control-label col-md-3">用户名</label>
+                    <div class="col-md-8">
+                        <input placeholder="用户名建议6到12个字" name="username" type="text" class="form-control namecheck" required="required" data-maxlength="12" data-minlength="6"/>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">密码</label>
+                    <div class="col-md-8">
+                        <input placeholder="密码建议6到12个字" name="password" type="password" class="form-control" required="required" id="password" data-maxlength="12" data-minlength="6"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">确认密码</label>
+                    <div class="col-md-8">
+                        <input placeholder="密码建议6到12个字" name="repassword" type="password" class="form-control" required="required" data-match="#password" data-maxlength="12" data-minlength="6"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">验证码</label>
+                    <div class="col-md-5">
+                        <input  name="image_check" type="text" class="form-control image_check" required="required"/>
+                    </div>
+                    <div class="col-md-4">
+                        <img id="ye_image" src="/home/index/image" width="185px" height="35px"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3"></label>
+                    <div class="col-md-8">
+                        <input  type="submit" value="提交" class="form-control"/>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(".namecheck").on("blur",function(){
+        $.get("/home/index/usernamecheck/username/"+$(".namecheck").val(),function(el){
+            console.log(el)
+            if(el=="true"){
+                $(".namecheck").css("border","1px solid red");
+            } else if(el=="false") {
+                $(".namecheck").css("border","1px solid green");
+            }
+        })
+    });
+    $("#ye_image").on("click",function(){
+        $("#ye_image").attr("src","/home/index/image/x/"+Math.random());
+    });
+    $(".image_check").on("blur",function(){
+        $.get("/home/index/imageckeck/image_check/"+$(".image_check").val(),function(el){
+            console.log(el)
+            if(el=="true"){
+                $(".image_check").css("border","1px solid green");
+            } else if (el =="false"){
+                $(".image_check").css("border","1px solid red");
+            }
+        })
+    })
+
+</script>
