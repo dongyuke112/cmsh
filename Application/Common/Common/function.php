@@ -7,7 +7,6 @@
  */
 function auth()
 {
-<<<<<<< HEAD
     if ($_COOKIE['remember']) {
         $xxx = $_COOKIE['remember'];
         $tables = M('user_remember');
@@ -25,11 +24,6 @@ function auth()
         }
     }
     if($_SESSION["auth"]||$res){
-=======
-    if($_SESSION["auth"] || $_COOKIE['remember']){
-      echo  $arr=$_COOKIE['remember'];
-        $yaoshi=$_SESSION["$arr"];
->>>>>>> 59b93c03937eb9c4360d9b7542d0e2c16cddbf14
         ?>
       <div class="col-md-3" style="color:white;line-height: 50px">欢迎<?=$_SESSION["auth"]["username"]?><a href="/home/index/logout">退出</a></div>
          <div class="col-md-1"><button type="button" class="btn" id="morebox">更多</button></div>
