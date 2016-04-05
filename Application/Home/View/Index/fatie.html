@@ -1,0 +1,66 @@
+{:auuth()}
+<include file="../Application/Home/view/daohangtiao.html" />
+<style type="text/css">
+    .form-horizontal
+    {
+        background-color: white;
+    }
+</style>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <form action="/home/index/fatiesave" method="post" class="form-horizontal">
+            <input type="hidden" name="user_id" value="{:lt_id()}">
+            <div class="form-group">
+                <label class="control-label col-md-2" >标题</label>
+                <div class="col-md-9">
+                    <input name="title" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" >发帖模块</label>
+                <div class="col-md-9">
+                   <select name="mokuai" class="form-control">
+                       <option value="1">新手上路</option>
+                       <option value="2">天下一统</option>
+                       <option value="3">翰墨承云 </option>
+                       <option value="4">大荒布告</option>
+                       <option value="5">大荒本纪</option>
+                       <option value="6">荒火教</option>
+                       <option value="7">天机营</option>
+                       <option value="8">魍魉</option>
+                       <option value="9">翎羽山庄 </option>
+                       <option value="10">云麓仙居</option>
+                       <option value="11">太虚观</option>
+                       <option value="12">弈剑听雨阁</option>
+                       <option value="13">冰心堂</option>
+                       <option value="14">天下之路</option>
+                       <option value="15">虎印节堂</option>
+                       <option value="16">映世宝鉴</option>
+                       <option value="17">浮生若梦</option>
+                   </select>
+                </div>
+            </div>
+            <script id="text" name="content" type="text/plain" class="col-md-10 col-md-offset-1"></script>
+            <div class="form-group">
+                <label class="control-label col-md-7"></label>
+                <div class="col-md-3">
+                    <input type="submit" value="提交" class="form-control">
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+        var ue=UE.getEditor("text",{
+            initialFrameWidth:900,
+            initialFrameheight:640,
+            toolbars:[
+                    ["emotion","bold","blockquote",
+                        "forecolor","fontsize","fontfamily",
+                        "insertimage","link","unlink","paragraph","cleardoc"]
+            ]
+        })
+    </script>
+</div>

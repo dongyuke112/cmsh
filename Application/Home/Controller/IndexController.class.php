@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 
+use Common\Page;
 use Think\Controller;
 use Think\Verify;
 
@@ -61,21 +62,37 @@ class IndexController extends Controller
     }
     public function loginckeck()
     {
-        $table=M("user");
-        $password=I("psaaword");
-        $password=md5("$password");
-        $arr=[
-            "username"=>I("username"),
-            "password"=>$password,
+        $table = M("user");
+        $password = I("psaaword");
+        $password = md5("$password");
+        $arr = [
+            "username" => I("username"),
+            "password" => $password,
         ];
-        $result= $table->where($arr)->find();
-        if($result["id"]){
-            $_SESSION["auth"]["perm"]=$result["perm"];
-            $_SESSION["auth"]["id"]=$result["id"];
-            $_SESSION["auth"]["username"]=$result["username"];
-            $this->success("登录成功","/home/index/index");
+        $result = $table->where($arr)->find();
+        if ($result["id"]) {
+            $_SESSION["auth"]["perm"] = $result["perm"];
+            $_SESSION["auth"]["id"] = $result["id"];
+            $_SESSION["auth"]["username"] = $result["username"];
+
+            if (isset($_POST['checkbox'])) {
+
+                // $arr = $_COOKIE['PHPSESSID'];
+
+                $time=time()+rand(0,99);
+                $yaoshi=sha1(md5($time));
+                //$_SESSION['remember']=$yaoshi;
+                setcookie('remember',$yaoshi,time()+86400*7);
+                $tables=M('user_remember');
+                $tables->user_id=$result['id'];
+                $tables->remember=$yaoshi;
+                $date=date('Y-m-d H:i:s');
+                $tables->created_at=$date;
+                $tables->add();
+            }
+            $this->success("登录成功", "/home/index/index");
         } else {
-            $this->error("用户名或密码错误","/home/index/login");
+            $this->error("用户名或密码错误", "/home/index/login");
         }
 
     }
@@ -94,11 +111,7 @@ class IndexController extends Controller
         $this->result=$table->select();
          $this->display();
     }
-    public function updateuser()
-    {
 
-       $this->display();
-    }
 
     public function userinfosave ()
     {
@@ -129,13 +142,114 @@ class IndexController extends Controller
 
 
     }
+
+    public function mengpailist()
+    {
+        $table=M("content");
+        $count=$table->count();
+        $this->pager=new Page($count,20);
+        if(isset($_GET["m"]))
+        {
+            $m=$_GET["m"];
+        } else {
+            $m=1;
+        }
+        if(isset($_GET["p"]))
+        {
+            $p=$_GET["p"];
+        } else
+        {
+            $p=0;
+        }
+        $this->p=$m;
+
+       $result= $table->field("lt_user.username,lt_content.id,lt_content.title,lt_content.created_at")->join('LEFT JOIN lt_user ON lt_user.id = lt_content.user_id')->limit($p,20)->where("mokuai=$m")->order("lt_content.created_at desc")->select();
+         $this->result=$result;
+
+        $this->display();
+
+    }
+    public function fatie()
+    {
+    $this->display();
+    }
+    public function fatiesave()
+    {
+      $table=M("content");
+        $table->create();
+        $table->created_at=date("Y-m-d H:i:s");
+        $table->add();
+    }
+    public function updateuser()
+    {
+        $id= $_SESSION["auth"]["id"];
+        $table=M("problem");
+        $problem=M("user_problem");
+        $problem->create();
+        $table->create();
+        $xx=$this->result=$problem->where("user_id=$id")->select();
+        $pro=[];
+        foreach($xx as $items ) {
+            $pid= $items["problem_id"];
+            $pro[]=$table->where("id = $pid")->find();
+        }
+        $this->pro=$pro;
+        $this->display();
+
+    }
     public function updateusersave()
     {
-        $this->display();
+        $id= $_SESSION["auth"]["id"];
+        $data = I('data');
+        $problem=M("user_problem");
+        $problem->create();
+        $xx=$this->result=$problem->where("user_id=$id")->select();
+        $daan=[];
+        foreach ($xx as $items){
+            $daan[]=$items['problems'];
+        }
+        if ($data[0]==$daan[0]&&$data[1]==$daan[1]&&$data[2]==$daan[2]) {
+            header("location:/home/index/updatecode");
+        } else {
+            $this->error("错误","/home/index/updateuser");
+        }
     }
-    public function mengpailisy()
+    public  function  updatecodesave(){
+        $table = M('user');
+        $table->create();
+        $id =$_SESSION['auth']['id'];
+        $arr=$table->where("id = $id")->find();
+        $newpassword = md5(I('newpassword'));
+        if ($newpassword ){
+            $table->id=$id;
+            $table->username= $_SESSION["auth"]["username"];
+            $table->password=$newpassword;
+            $table->save();
+            $this->success('成功','/home/index/index');
+        } else {
+            $this->error('原始密码输入错误','/home/index/updatecode');
+        }
+    }
+    public function tiezi()
     {
+        $id=I("id");
+       if($id)
+       {
+           $table=M("content");
+          $result= $table->find($id);
+           $this->result=$result;
+
+
+       }
+        if(isset($_GET["m"]))
+        {
+            $m=$_GET["m"];
+        } else {
+            $m=1;
+        }
+        $this->p=$m;
         $this->display();
     }
+
 
 }

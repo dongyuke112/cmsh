@@ -1,0 +1,125 @@
+<include file="../Application/Home/view/daohangtiao.html" />
+
+<div class="row">
+<ul class="breadcrumb">
+    <li><a href="/home/index/index">论坛首页</a></li>
+    <li><a href="/home/index/mengpailist/m/{$p}">{:mengpai()}</a></li>
+</ul>
+    <div class="col-md-1 danghang">
+        <p>模块导航</p>
+        <div>
+            <button type="button" id="click1" class="btn">大荒风云</button>
+        <ul class="hiddens1">
+            <li><a href="/home/index/mengpailist/m/1">新手上路</a></li>
+            <li><a href="/home/index/mengpailist/m/2">天下一统</a></li>
+            <li><a href="/home/index/mengpailist/m/3">翰墨承云 </a></li>
+            <li><a href="/home/index/mengpailist/m/4">大荒布告</a></li>
+            <li><a href="/home/index/mengpailist/m/5">大荒本纪</a></li>
+        </ul>
+        </div>
+        <div><button type="button" id="click2" class="btn ">奇门异派</button>
+            <ul class="hiddens2">
+                <li><a href="/home/index/mengpailist/m/6">荒火教</a></li>
+                <li><a href="/home/index/mengpailist/m/7">天机营</a></li>
+                <li><a href="/home/index/mengpailist/m/9">翎羽山庄 </a></li>
+                <li><a href="/home/index/mengpailist/m/8">魍魉</a></li>
+                <li><a href="/home/index/mengpailist/m/10">云麓仙居</a></li>
+                <li><a href="/home/index/mengpailist/m/11">太虚观</a></li>
+                <li><a href="/home/index/mengpailist/m/12">弈剑听雨阁</a></li>
+                <li><a href="/home/index/mengpailist/m/13">冰心堂 </a></li>
+            </ul>
+
+        </div>
+        <div><button id="click3" class="btn">仗剑江湖</button>
+            <ul class="hiddens3">
+                <li><a href="/home/index/mengpailist/m/14">天下之路</a></li>
+                <li><a href="/home/index/mengpailist/m/15">虎印节堂</a></li>
+                <li><a href="/home/index/mengpailist/m/16">映世宝鉴  </a></li>
+                <li><a href="/home/index/mengpailist/m/17">浮生若梦</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-11">
+        <div class="col-md-12">
+            <p>版主</p>
+            <img src="IMAGE_PATH/huanghuo.jpg" width="900px" height="450px" class="ye_image_list">
+        </div>
+        <div class="col-md-7 fatie" ><a href="/home/index/fatie"><img src="IMAGE_PATH/fatie.png" class="ye_image"/></a></div>
+        <div class="col-md-5">
+            {$pager->show()}
+        </div>
+        <div class="col-md-12 top_model" >
+
+
+
+        </div>
+        <div class="col-md-12 normal_model" >
+            <ul>
+                <volist name="result" id="items">
+                   <li><img src="IMAGE_PATH/list.png" width="20px" height="20px"><a href="/home/index/tiezi/id/{$items.id}/m/{$p}">{$items.title}</a>
+                   <span>发帖人：{$items.username}</span> <span>发帖时间：{$items.created_at}</span>
+                   </li>
+                </volist>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .fatie
+    {
+       height: 60px;
+    }
+    .ye_image
+    {
+        margin-top: 20px;
+    }
+    .row
+    {
+        background-color: white;
+    }
+    .hiddens1,.hiddens2,.hiddens3
+    {
+        list-style-type: none;
+        margin-left: -39px;
+        display: none;
+    }
+    .danghang
+    {
+        border: 1px solid rgb(189,215,227) ;
+
+    }
+    button
+    {
+        margin-top: 5px;
+        height: 25px;
+        background-color: rgb(245,245,245);
+        margin-left: -10px;
+
+    }
+    .ye_image_list
+    {
+        margin-left: 80px;
+    }
+    li
+    {
+        list-style-type: none;
+    }
+    li+li
+    {
+        margin-top: 5px;
+    }
+
+
+</style>
+<script type="text/javascript">
+    $("#click1").on("click",function(){
+        $(".hiddens1").toggle();
+    });
+    $("#click2").on("click",function(){
+        $(".hiddens2").toggle();
+    });
+    $("#click3").on("click",function(){
+        $(".hiddens3").toggle();
+    });
+</script>

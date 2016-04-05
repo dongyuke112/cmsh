@@ -2,11 +2,24 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel">
-            <div class="panel-heading">修改密码</div>
+            <div class="panel-heading">请输入密保问题</div>
             <div class="panel-body">
                 <form class="form-horizontal" action="/home/index/updateusersave" method="post">
-                    <input name="problem" type="text"/>
-                    <input type="submit">
+                    <div class="form-group">
+                        <volist name="pro" id ="items">
+                        <label class="control-label col-md-3 ">密保问题</label>
+                        <div class="col-md-8">
+                             <p style="margin-left: 10px;margin-top: 8px"> {$items.problem}</p>
+                        </div>
+                        <div class="col-md-8 col-md-offset-3">
+                                <input type="text" name="data[]" class="form-control" required="required"/>
+                        </div>
+                        </volist>
+                    </div>
+
+                    <div class="panel-footer ">
+                         <input  class="form-control" type="submit" value="提交"/>
+                    </div>
                 </form>
             </div>
         </div>
