@@ -1,3 +1,6 @@
 .idea
 Application/Runtime/*
 Application/Test/*
+www/Uploads/*
+www/ueditor/*
+
