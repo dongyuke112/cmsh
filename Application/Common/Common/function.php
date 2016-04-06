@@ -91,3 +91,7 @@ function mengpai()
         }
     }
 }
+function is_perm()
+{
+
+}

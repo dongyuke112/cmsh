@@ -1,0 +1,43 @@
+<include file="../Application/Home/view/nav.html" />
+<div class="row">
+    <div class="col-md-3">
+       <div class="panel">
+           <div class="panel-heading">用户信息</div>
+           <div class="panel_body">
+              <div ><img src="{$info.imagepath}" class="iamges" width="150px" height="150px"/></div>
+           </div>
+       </div>
+    </div>
+    <div class="col-md-9 ">
+        <div class="panel right_panel"></div>
+        <div class="panel-heading">详细信息</div>
+        <div class="panel-body">
+            <div><p>名字：{$info.name}</p></div>
+            <div><p>性别：{$info.gender}</p></div>
+            <div><p>生日：{$info.birthday}</p></div>
+            <div><p>联系方式：{$info.mobile}</p></div>
+            <div><p>email：{$info.email}</p></div>
+            <div><p>个性签名：{$info.sign}</p></div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .dropdown
+    {
+        margin-left: 100px;
+    }
+    div
+    {
+        background-color: rgb(238,238,238);
+    }
+    .iamges
+    {
+        margin-left: 50px;
+    }
+    .panel-body
+    {
+        height: 260px;
+    }
+
+
+</style>

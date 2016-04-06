@@ -3,7 +3,7 @@
     <div class="panel col-md-8 col-md-offset-2">
         <div class="panel-heading">完善用户信息</div>
         <div class="panel-body">
-            <form action="/home/index/userinfosave" method="post" class="form-horizontal" data-toggle="validator">
+            <form action="/home/index/userinfosave" method="post" class="form-horizontal" data-toggle="validator" enctype="multipart/form-data">
                 <input type="hidden" name="user_id" value="{:lt_id()}"/>
                 <div class="form-group">
                     <label class="control-label col-md-3 ">姓名</label>
@@ -82,6 +82,12 @@
                     </div>
                     <div class="col-md-8 col-md-offset-3">
                         <input type="text" name="problem3" class="form-control" required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">头像</label>
+                    <div class="col-md-8">
+                        <input type="file"name="name"  required="required" />
                     </div>
                 </div>
                 <div class="form-group">
