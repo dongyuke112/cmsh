@@ -3,5 +3,74 @@
     <ul class="breadcrumb">
         <li><a href="/home/index/index">论坛首页</a></li>
         <li><a href="/home/index/mengpailist/m/{$p}">{:mengpai()}</a></li>
+        <li><a href="/home/index/tiezi/id/{$result.id}/m/{$p}">{$ids.title}</a></li>
     </ul>
 </div>
+<div class="row">
+    <div class="col-md-2 ye-first-border">
+        <div class="col-md-12 " >
+            <a href="/home/index/fatie"><img src="IMAGE_PATH/fatie.png" class="ye_image"/></a>
+            <a href="/home/index/discuss/id/{$ids.id}"><img src="IMAGE_PATH/huifu.png" class="ye_image"/></a>
+
+        </div>
+        <div class="col-md-12 ye_borders">
+            回复数：
+        </div>
+        <div>发帖人：{$user.username}</div>
+        <div><img src="{$imagepath}"/></div>
+    </div>
+    <div class="col-md-8 ye-first-border">
+      <span>发表于：{$result.created_at}</span>
+        <div class="col-md-12">{$content}</div>
+        <div class="ye_buttom col-md-10">
+            <input name="discuss"  class="form-control" />
+        </div>
+        <div class="col-md-2"><button type="button" class="btn" id="submit">快捷回复</button></div>
+    </div>
+
+</div>
+<volist name="result" id="discuss">
+    <div class="row">
+        <div class="col-md-2 discuss">
+            <div class="col-md-12 ye_border_second">{$discuss.username}</div>
+            <div class="col-md-12 ye_border_second"><img src="{$discuss.imagepath}"/></div>
+        </div>
+        <div class="col-md-10 discuss ye_border_second">{$discuss.content}</div>
+    </div>
+</volist>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">{$pager->show()}</div>
+</div>
+<style type="text/css">
+    .row
+    {
+        background-color: white;
+    }
+    .ye_image
+    {
+        margin-top: 20px;
+    }
+    .ye_borders
+    {
+        border-bottom: 3px solid rgb(235,235,235);
+    }
+    .ye-first-border
+    {
+        border-right: 1px solid rgb(235,235,235);
+        height: auto;
+        border-bottom: 1px solid rgb(235,235,235);
+    }
+    .ye_buttom
+    {
+        margin-bottom: 5px;
+    }
+    .discuss
+    {
+        margin-top: 10px;
+    }
+    .ye_border_second
+    {
+        border:1px solid rgb(235,235,235);
+    }
+</style>
+<script ></script>

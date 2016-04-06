@@ -10,6 +10,7 @@ class IndexController extends Controller
 {
     public function index()
     {
+
         $this->display();
     }
     public function regiest()
@@ -77,11 +78,8 @@ class IndexController extends Controller
 
             if (isset($_POST['checkbox'])) {
 
-                // $arr = $_COOKIE['PHPSESSID'];
-
                 $time=time()+rand(0,99);
                 $yaoshi=sha1(md5($time));
-                //$_SESSION['remember']=$yaoshi;
                 setcookie('remember',$yaoshi,time()+86400*7);
                 $tables=M('user_remember');
                 $tables->user_id=$result['id'];
@@ -96,14 +94,15 @@ class IndexController extends Controller
         }
 
     }
-    public function xx ()
+   /* public function xx ()
     {
         $this->display();
-    }
+    }*/
     public function logout()
     {
         $_SESSION["auth"]=[];
         $this->success("成功退出！","/home/index/index");
+        setcookie("remember",null);
     }
     public function userinfo()
     {
@@ -178,7 +177,12 @@ class IndexController extends Controller
       $table=M("content");
         $table->create();
         $table->created_at=date("Y-m-d H:i:s");
-        $table->add();
+       $xx= $table->add();
+        if(  $xx){
+            $this->success("","/home/index/index");
+        }  else {
+            $this->error("","/home/index/index");
+        }
     }
     public function updateuser()
     {
@@ -236,10 +240,19 @@ class IndexController extends Controller
        if($id)
        {
            $table=M("content");
-          $result= $table->find($id);
-           $this->result=$result;
-
-
+           $result= $table->find($id);
+           $this->ids=$result;
+           $this->content=html_entity_decode($result["content"]);
+           $user_id=$result["user_id"];
+           $res=M("user");
+           $this->user= $res->field("username")->where("id=$user_id")->find();
+           $image=M("user_info");
+        $path= $image->field("imagepath")->where("user_id=$user_id")->find();
+           if($path){
+               $this->imagepath=$path;
+           } else {
+               $this->imagepath="/public/image/defimg.gif";
+           }
        }
         if(isset($_GET["m"]))
         {
@@ -247,9 +260,58 @@ class IndexController extends Controller
         } else {
             $m=1;
         }
+        if(isset($_GET["p"]))
+        {
+            $p=$_GET["p"];
+        } else {
+            $p=1;
+        }
+        $start=($p-1)*5;
+
+
+        $disucss=M("discuss");
+        $count=$disucss->where("content_id=$id")->count();
+            $this->pager=new Page($count,5);
         $this->p=$m;
+        $sql="select lt_discuss.*,lt_user_info.imagepath,lt_user.username from lt_discuss left join lt_content on lt_discuss.content_id=lt_content.id left join lt_user on lt_discuss.user_id=lt_user.id left join lt_user_info on lt_discuss.user_id=lt_user_info.user_id where lt_discuss.content_id=$id  order by lt_discuss.created_at  desc  limit $start,5 ";
+        $result=$disucss->query($sql);
+         $xx=[];
+        foreach($result as $items){
+
+            if( $items["imagepath"]==null){
+                $items["imagepath"]="/public/image/defimg.gif";
+            }
+            $items["content"]=html_entity_decode($items["content"]);
+            $xx[]=$items;
+        }
+
+       $this->result=$xx;
         $this->display();
     }
+    public function discuss()
+    {
+        $id=I("id");
+        $user_id= $_SESSION["auth"]["id"];
+        $this->content_id=$id;
+        $this->user_id=$user_id;
+
+        $this->display();
+    }
+    public function dissave()
+    {
+        $table=M("discuss");
+        $content=M("content");
+        $id=I("content_id");
+        if( $table->create()) {
+            $table->created_at=date("Y-m-d H:i:s");
+            $content->where("id= $id")->setInc( 'count',1 );
+            $table->add();
+            $this->success("","/home/index/tiezi/id/$id");
+        } else {
+            $this->error("error","/home/index/discuss");
+        }
+    }
+
 
 
 }

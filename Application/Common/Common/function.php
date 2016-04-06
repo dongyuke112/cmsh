@@ -25,7 +25,7 @@ function auth()
     }
     if($_SESSION["auth"]||$res){
         ?>
-      <div class="col-md-3" style="color:white;line-height: 50px">欢迎<?=$_SESSION["auth"]["username"]?><a href="/home/index/logout">退出</a></div>
+      <div class="col-md-3" style="color:white;line-height: 50px">欢迎<a href="#" style="color:white;"><?=$_SESSION["auth"]["username"]?></a><a href="/home/index/logout">退出</a></div>
          <div class="col-md-1"><button type="button" class="btn" id="morebox">更多</button></div>
         <?php
     } else {
@@ -34,6 +34,7 @@ function auth()
         <?php
     }
 }
+
 function lt_id()
 {
     if(isset($_SESSION["auth"])){
