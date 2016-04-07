@@ -71,8 +71,6 @@ class IndexController extends Controller
 
     public function loginckeck()
     {
-
-
         $table = M("user");
         $inf=M("user_info");
         $password = I("psaaword");
@@ -95,7 +93,6 @@ class IndexController extends Controller
             }
 
             if (isset($_POST['checkbox'])) {
-
                 $time = time() + rand(0, 99);
                 $yaoshi = sha1(md5($time));
                 setcookie('remember', $yaoshi, time() + 86400 * 7);
@@ -275,8 +272,9 @@ class IndexController extends Controller
         $id =$_SESSION['auth']['id'];
         $table=M('user_info');
         $problem= M('user_problem');
-        $this->pro=$problem->join('LEFT JOIN lt_problem ON lt_user_problem.problem_id = lt_problem.id')->
+      $this->pro=$problem->join('LEFT JOIN lt_problem ON lt_user_problem.problem_id = lt_problem.id')->
         where("user_id=$id")->select();
+
         $this->show=$table->getByUserId($id);
 
         $this->display();

@@ -9,8 +9,8 @@ function auth()
 {
     $res=false;
     if (isset($_COOKIE['remember'])) {
-        $xxx = $_COOKIE['remember'];
-        $tables = M('user_remember');
+        $xxx = $_COOKIE['remember'];//
+        $tables = M('user_remember');//
         $tables->create();
         $condition=[
             'remember'=>"$xxx",
@@ -95,4 +95,14 @@ function mengpai()
 function is_perm()
 {
     if(isset($_SESSION["admin"])){}
+}
+function zengjia()
+{
+   if(isset($_SESSION["auth"]["wanshan"])){
+       if($_SESSION["auth"]["wanshan"]==1){
+           return true;
+       } else {
+           return false;
+       }
+   }
 }

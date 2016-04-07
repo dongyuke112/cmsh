@@ -24,7 +24,7 @@ class UserModel extends  Model
     protected $_validate=[
         ["username","require","用户名不能为空",Model::MUST_VALIDATE,"",Model::MODEL_BOTH],
         ["password","repassword","两次密码不一致",Model::MUST_VALIDATE,"confirm",Model::MODEL_BOTH],
-      ["image_check","checkimage","验证码错误",Model::MUST_VALIDATE,"callback",Model::MODEL_BOTH],
+        ["image_check","checkimage","验证码错误",Model::MUST_VALIDATE,"callback",Model::MODEL_BOTH],
 
     ];
    public function checkimage($xx)

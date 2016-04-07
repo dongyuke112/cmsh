@@ -20,7 +20,11 @@
           <div class="col-md-2 col-md-offset-10 text-center" style="background-color: rgb(234,234,234)">
               <div class="col-md-8"><img src="IMAGE_PATH/userdefault.png" width="70px" height="70px" style="margin-left: -20px"/></div>
               <div class="col-md-2"></div>
-              <div class="col-md-12"><a href="/Home/Index/userinfo">完善用户信息</a></div>
+              {:zengjia()?'<div class="col-md-12"><a href="/Home/Index/infoview">修改信息</a></div>':' <div
+                  class="col-md-12"><a href="/Home/Index/userinfo">完善信息</a></div>'}
+
+
+
               <div class="col-md-12"><a href="/Home/Index/updateuser">修改密码</a></div>
 
           </div>
