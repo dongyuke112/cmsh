@@ -271,6 +271,16 @@ class IndexController extends Controller
             $this->error('原始密码输入错误', '/home/index/updatecode');
         }
     }
+    public function  infoview(){
+        $id =$_SESSION['auth']['id'];
+        $table=M('user_info');
+        $problem= M('user_problem');
+        $this->pro=$problem->join('LEFT JOIN lt_problem ON lt_user_problem.problem_id = lt_problem.id')->
+        where("user_id=$id")->select();
+        $this->show=$table->getByUserId($id);
+
+        $this->display();
+    }
 
     public function tiezi()
     {

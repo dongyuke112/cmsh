@@ -61,7 +61,7 @@
         })
     });
     $("#ye_image").on("click",function(){
-        $("#ye_image").attr("src","/home/index/image/x/"+Math.random());
+        $("#ye_image").attr("src","/home/index/image/x/"+Math.random());//点击更换验证码
     });
     $(".image_check").on("blur",function(){
         $.get("/home/index/imageckeck/image_check/"+$(".image_check").val(),function(el){
