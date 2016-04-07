@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="gb2312">
+<title>jquery音乐网站竖直下拉菜单 - 站长素材</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="style/basic.css"/>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.all>li').mouseover(function(e) {
+        $(this).children().stop().slideDown(300);
+    });
+	$('.all>li').mouseout(function(e) {
+        $(this).children().stop().slideUp(300);
+    });
+})
+</script>
+</head>
+
+<body>
+
+  <div id="left">
+    	<div id="logo"></div>
+        
+        <div id="nav">
+		<ul class="all">
+        	<li class="li01">首页
+            	<ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+          </li>
+            
+            <li class="li01">彩铃
+            <ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+            </li>
+            
+            <li class="li01">乐库
+            <ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+            </li>
+            
+            <li class="li01">排行榜
+            <ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+            </li>
+            
+            <li class="li01">电台
+            <ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+            </li>
+            
+            <li class="li01">Mv
+            <ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+            </li>
+            
+            <li class="li01">专题
+            <ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+            </li>
+            
+            <li class="li01">社区
+            <ul class="li_01">
+                	<li>一级菜单</li>
+                	<li>一级菜单</li>
+                    <li>一级菜单</li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+  </div>
+<div align="center" style="width:1016px; margin:0 auto">
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：IE8、360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. </p>
+<p>来源：<a href="http://sc.chinaz.com/" target="_blank">站长素材</a></p>
+</div>
+</body>
+</html>
