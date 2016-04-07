@@ -1,0 +1,86 @@
+<include file="../Application/Home/view/daohangtiao.html" />
+<div class="row">
+    <div class="panel col-md-8 col-md-offset-2">
+        <div class="panel-heading">展示用户信息</div>
+        <div class="panel-body">
+            <form action="/home/index/userinfosave" method="post" class="form-horizontal" data-toggle="validator">
+                <input type="hidden" name="user_id" value="{:lt_id()}"/>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">姓名</label>
+                    <div class="col-md-8">
+                        <input type="text"name="name" value="{$show.name}" class="form-control" required="required"
+                               placeholder="输入姓名"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">性别</label>
+                    <div class="col-md-8">
+                        <select name="gender" class="form-control">
+                            <if condition="$show.gender == 'M'">
+                                <option  value="M" selected="selected">男</option>
+                                <option  value="F">女</option>
+                                <else/>
+                                <option  value="M">男</option>
+                                <option  value="F" selected="selected">女</option>
+                            </if>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">生日</label>
+                    <div class="col-md-8">
+                        <input type="text" name="birthday" value="{$show.birthday}" class="form-control" id="demo"
+                               required="required" placeholder="点击输入生日">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">手机号码</label>
+                    <div class="col-md-8">
+                        <input type="text" name="mobile"  value="{$show.mobile}" class="form-control"
+                        required="required" placeholder="输入手机号码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">邮箱</label>
+                    <div class="col-md-8">
+                        <input type="email" name="email" value="{$show.email}" class="form-control"  required="required" placeholder="输入有效的邮箱">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3 ">个性签名</label>
+                    <div class="col-md-8">
+                        <textarea name="sign" class="form-control"
+                                  placeholder="输入个性签名">{$show.sign}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <volist name="pro" id ="items">
+                        <label class="control-label col-md-3 ">密保问题</label>
+                        <div class="col-md-8">
+                            <p style="margin-left: 10px;margin-top: 8px"> {$items.problem}</p>
+                        </div>
+                        <div class="col-md-8 col-md-offset-3">
+                            <input type="hidden" name="problem_ids[]" value="{$items.problem_id}"/>
+                            <input type="text" name="data[]" value="{$items.problems}" class="form-control"
+                                   required="required"/>
+                        </div>
+                    </volist>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8 col-md-offset-3">
+                        <input  type="submit" value="保存" class="form-control" required="required"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#demo").datetimepicker({
+        dayOfWeekStart:1,
+        timepicker:false,
+        format:"Y-m-d"
+
+    });
+    $.datetimepicker.setLocale('zh');
+</script>
