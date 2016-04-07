@@ -92,9 +92,24 @@ function mengpai()
         }
     }
 }
-function is_perm()
+function is_perm($xx="")
 {
-    if(isset($_SESSION["admin"])){}
+
+
+        if(isset($_SESSION["admin"])){
+            if($_SESSION["admin"]["root"]==1){
+                return true;
+            } else {
+                if(in_array($xx, $_SESSION["admin"]["perm"])){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            exit("403 forbidden");
+        }
+
 }
 function zengjia()
 {
@@ -105,4 +120,7 @@ function zengjia()
            return false;
        }
    }
+
+
+
 }

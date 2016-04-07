@@ -14,6 +14,7 @@ return array(
     'URL_ROUTER_ON'          => true, // 是否开启URL路由
     'URL_ROUTE_RULES'        => [
         'login'=>'/home/index/login',
+        'medal'=>'/home/index/medal',
 
     ], // 默认路由规则 针对模块
     'LAYOUT_ON' => true, // 打开layout功能

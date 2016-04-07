@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/Public/boot/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <a href="/home/index/index" class="btn btn-info"style="margin-left: 195px;">回首页</a>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <table class="table table-bordered">
+                <tr>
+
+                    <th>标题</th>
+                    <th>内容</th>
+                    <th>性别</th>
+                    <th>图片</th>
+                </tr>
+
+                <volist name="res" id="re">
+                    <tr>
+
+                        <td>{$re['title']}</td>
+                        <td>{$re['content']}</td>
+                        <td>{$re['gender'] }</td>
+                        <td><img style="height: 50px;width: 50px;" src="{$head}"><a
+                                href="/home/index/medal_user_show/id/{$re.id}">{$re.name}</a></td>
+
+                    </tr>
+                </volist>
+            </table>
+           {$pages->show()}
+        </div>
+    </div>
+</div>
+</body>
+</html>

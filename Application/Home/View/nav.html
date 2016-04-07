@@ -2,42 +2,45 @@
     <div class="col-md-11">
         <nav class="nav navbar-default">
             <ul class="nav navbar-nav">
-                <li class="dropdown"><a data-toggle="dropdown">用户管理</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/home/admin/userlist">用户列表</a></li>
-                    </ul>
-                </li>
+                {:is_perm()?'<li class="dropdown"><a data-toggle="dropdown">用户管理</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/home/admin/userlist">用户列表</a></li>
+                </ul>
+            </li>':""}
+
                 <li class="dropdown"><a data-toggle="dropdown">板块管理</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/Home/admin/mk/m/1">新手上路 </a></li>
-                        <li><a href="#">天下一统</a></li>
-                        <li><a href="#">翰墨承云</a></li>
-                        <li><a href="#">大荒布告</a></li>
-                        <li><a href="#">大荒本纪</a></li>
-                        <li><a href="#">荒火教</a></li>
-                        <li><a href="#"> 天机营</a></li>
-                        <li><a href="#">翎羽山庄</a></li>
-                        <li><a href="#">魍魉</a></li>
-                        <li><a href="#">云麓仙居</a></li>
-                        <li><a href="#">太虚观</a></li>
-                        <li><a href="#">弈剑听雨阁</a></li>
-                        <li><a href="#">冰心堂</a></li>
-                        <li><a href="#">天下之路 </a></li>
-                        <li><a href="#">虎印节堂 </a></li>
-                        <li><a href="#">映世宝鉴 </a></li>
-                        <li><a href="#">浮生若梦 </a></li>
+                        {:is_perm("xs")?' <li><a href="/Home/admin/mk/m/1">新手上路 </a></li>':''}
+                        {:is_perm("yt")?' <li><a href="/Home/admin/mk/m/2">天下一统</a></li>':''}
+                        {:is_perm("hm")?'  <li><a href="/Home/admin/mk/m/3">翰墨承云</a></li>':''}
+                        {:is_perm("bg")?'  <li><a href="/Home/admin/mk/m/4">大荒布告</a></li>':''}
+                        {:is_perm("bj")?'  <li><a href="/Home/admin/mk/m/5">大荒本纪</a></li>':''}
+                        {:is_perm("hh")?' <li><a href="/Home/admin/mk/m/6">荒火教</a></li>':''}
+                        {:is_perm("tj")?' <li><a href="/Home/admin/mk/m/7"> 天机营</a></li>':''}
+                        {:is_perm("ly")?'  <li><a href="/Home/admin/mk/m/9">翎羽山庄</a></li>':''}
+                        {:is_perm("wl")?' <li><a href="/Home/admin/mk/m/8">魍魉</a></li>':''}
+                        {:is_perm("yl")?' <li><a href="/Home/admin/mk/m/10">云麓仙居</a></li>':''}
+                        {:is_perm("tx")?' <li><a href="/Home/admin/mk/m/11">太虚观</a></li>':''}
+                        {:is_perm("yj")?' <li><a href="/Home/admin/mk/m/12">弈剑听雨阁</a></li>':''}
+                        {:is_perm("bx")?'  <li><a href="/Home/admin/mk/m/13">冰心堂</a></li>':''}
+                        {:is_perm("txzl")?' <li><a href="/Home/admin/mk/m/14">天下之路 </a></li>':''}
+                        {:is_perm("hyjt")?'<li><a href="/Home/admin/mk/m/15">虎印节堂 </a></li>':''}
+                        {:is_perm("ysbj")?'  <li><a href="/Home/admin/mk/m/16">映世宝鉴 </a></li>':''}
+                        {:is_perm("fsrm")?' <li><a href="/Home/admin/mk/m/17">浮生若梦 </a></li>':''}
+
                     </ul>
                 </li>
-                <li class="dropdown"><a data-toggle="dropdown">系统设置</a>
-                    <ul class="dropdown-menu">
-                        <li><a>增加版主</a></li>
-                    </ul>
-                </li>
+                {:is_perm()?' <li class="dropdown"><a data-toggle="dropdown">系统设置</a>
+                <ul class="dropdown-menu">
+                    <li><a >增加版主</a></li>
+                </ul>
+            </li>':''}
+
                 <li class="dropdown" ><a href="#" data-toggle="dropdown">欢迎{$name}</a>
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown">个人信息</a>
                     <ul class="dropdown-menu">
-                        <li><a href="/home/admin/alllist">个人信息业</a></li>
+                        <li><a href="/home/admin/alllist">个人信息页</a></li>
                     </ul>
                 </li>
             </ul>
