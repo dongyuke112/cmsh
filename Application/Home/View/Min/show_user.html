@@ -10,8 +10,22 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
              <table class="table table-bordered">
-                 <volist>
-
+                 <tr>
+                     <th>用户名</th>
+                     <th>密码</th>
+                     <th>创建时间</th>
+                     <th>操作</th>
+                 </tr>
+                 <volist name="users" id="user">
+                    <tr>
+                        <td>{$user['username']}</td>
+                        <td>{$user['password']}</td>
+                        <td>{$user['created_at']}</td>
+                        <td>
+                            <a href="/home/min/user_info/id/{$user.id}">查看</a>
+                            <a href="/home/min/user_delete/id/{$user.id}">删除</a>
+                        </td>
+                    </tr>
                  </volist>
              </table>
         </div>
