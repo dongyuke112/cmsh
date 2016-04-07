@@ -82,11 +82,59 @@ class AdminController extends Controller
     }
     public function userlist()
     {
+        $this->name= $_SESSION["admin"]["username"];
         $table=M("user");
+
+        if(isset($_GET["p"]))
+        {
+            $p=$_GET["p"];
+        } else {
+            $p=1;
+        }
+        $st=($p-1)*10;
+        $keyword=I("keyword");
+        if($keyword){
+            $con["username"]=["like","%$keyword%"];
+            $result=$table->where($con)->limit($st,10)->select();
+        } else {
+            $result=$table->limit($st,10)->select();
+        }
         $count=$table->count();
-        $page=new Page(100,20);
+        $page=new Page($count,10);
         $this->page=$page;
-       $result=$table->select();
+        $this->result=$result;
         $this->display();
     }
+    public function mk()
+    {
+        $this->name= $_SESSION["admin"]["username"];
+        $this->display();
+    }
+    public function softdel()
+    {
+         $id=I("id");
+        $table=M("user");
+       $table->softdelete='1';
+      $xx=  $table->where("id=$id")->save();
+        if($xx)
+        {
+         $this->success("操作成功","/home/admin/userlist");
+        } else {
+            $this->error("","/home/admin/userlist");
+        }
+    }
+    public function recover()
+    {
+        $id=I("id");
+        $table=M("user");
+        $table->softdelete='0';
+        $xx=  $table->where("id=$id")->save();
+        if($xx)
+        {
+            $this->success("操作成功","/home/admin/userlist");
+        } else {
+            $this->error("","/home/admin/userlist");
+        }
+    }
+
 }

@@ -80,6 +80,7 @@ class IndexController extends Controller
         $arr = [
             "username" => I("username"),
             "password" => $password,
+            "softdelete"=>0
         ];
         $result = $table->where($arr)->find();
         if ($result["id"]) {
@@ -171,31 +172,30 @@ class IndexController extends Controller
 
 
     }
-    public function userinfoupdate()
-    {
 
-    }
 
     public function mengpailist()
     {
         $table = M("content");
-        $count = $table->count();
-        $this->pager = new Page($count, 20);
+
         if (isset($_GET["m"])) {
             $m = $_GET["m"];
         } else {
             $m = 1;
         }
+        $count = $table->where("mokuai=$m")->count();
+        $this->pager = new Page($count, 20);
         if (isset($_GET["p"])) {
             $p = $_GET["p"];
         } else {
-            $p = 0;
+            $p = 1;
         }
         $this->p = $m;
+        $st=($p-1)*20;
 
-        $result = $table->field("lt_user.username,lt_content.id,lt_content.title,lt_content.created_at")->join('LEFT JOIN lt_user ON lt_user.id = lt_content.user_id')->limit($p, 20)->where("mokuai=$m")->order("lt_content.created_at desc")->select();
+        $result = $table->field("lt_user.username,lt_content.id,lt_content.title,lt_content.created_at")->join('LEFT JOIN lt_user ON lt_user.id = lt_content.user_id')->limit($st, 20)->where("mokuai=$m")->order("lt_content.created_at desc")->select();
         $this->result = $result;
-
+        $this->pager->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
         $this->display();
 
     }
@@ -295,11 +295,17 @@ class IndexController extends Controller
             $this->user = $res->field("username")->where("id=$user_id")->find();
             $image = M("user_info");
             $path = $image->field("imagepath")->where("user_id=$user_id")->find();
-            if ($path) {
+            if ($path==0) {
+
                 $this->imagepath = $path["imagepath"];
+
+
+
             } else {
-                $this->imagepath = "/public/image/defimg.gif";
+               $this->imagepath = "/public/image/defimg.gif";
             }
+
+
         }
         if (isset($_GET["m"])) {
             $m = $_GET["m"];
@@ -343,6 +349,82 @@ class IndexController extends Controller
 
         $this->display();
     }
+    public  function search(){
+        $this->display();
+    }
+
+    public  function searchcheck(){
+        $keyword = I('keyword');
+        $writer = I("writer");
+        $time =I("time");
+        if ($keyword ||$writer || $time) {
+        $table =M('content');
+        $condition =[
+            "title"=>["like","%$keyword%"],
+            "username"=>["like","%$writer%"],
+            "lt_content.created_at"=>["like","%$time%"],
+        ];
+            $total=ceil($table->where($condition)->count()/10);
+       $pro =$table->where($condition)->field("lt_content.id,lt_content.title,lt_content.mokuai,lt_content
+       .created_at,lt_user.username,lt_user.id")
+           ->join("left join lt_user on lt_content.user_id = lt_user.id")
+           ->order("lt_content.created_at desc")->select();
+        $res=[];
+        foreach ($pro as $item)
+        {
+            $p=$item["mokuai"];
+            $item["p"]=$p;
+            $m=$item["mokuai"];
+            if($m==1)
+            {
+                $xx= "新手上路 ";
+            } else if ($m==2){
+                $xx= "天下一统 ";
+            } else if ($m==3){
+                $xx= "翰墨承云";
+            } else if ($m==4){
+                $xx= "大荒布告";
+            } else if ($m==5){
+                $xx= "大荒本纪";
+            } else if ($m==6){
+                $xx= "荒火教";
+            } else if ($m==7){
+                $xx= "天机营";
+            } else if ($m==8){
+                $xx= "魍魉";
+            } else if ($m==9){
+                $xx= "翎羽山庄";
+            } else if ($m==10){
+                $xx= "云麓仙居";
+            } else if ($m==11){
+                $xx= "太虚观";
+            } else if ($m==12){
+                $xx= "弈剑听雨阁";
+            } else if ($m==13){
+                $xx= "冰心堂";
+            } else if ($m==14){
+                $xx= "天下之路";
+            } else if ($m==15){
+                $xx= "虎印节堂";
+            } else if ($m==16){
+                $xx= "映世宝鉴";
+            }else if ($m==17){
+                $xx= "浮生若梦";
+            }
+            $item["mokuai"]=$xx;
+            $res[]=$item;
+        }
+        $this->pro=$res;
+        $this->page= new Page($total,10);
+        $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
+        $this->display();
+
+        } else {
+            $this->error("请输入搜索内容","/home/index/search");
+        }
+    }
+
+
 
     public function dissave()
     {
