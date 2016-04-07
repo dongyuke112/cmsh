@@ -359,5 +359,24 @@ class IndexController extends Controller
         }
     }
 
+    public function medal()
+    {
+        $user=M('user');
+        $content=M('content');
+        $results=$content->join("left join lt_user on lt_content.user_id=lt_user.id")->select();
+        $re=[];
+        foreach($results as $result){
+            $result['content']=html_entity_decode($result['content']);
+            $image=$result['imagepath'];
+            if($image!='') {
 
+            }else{
+                $this->head=('/public/image/defimg.gif');
+            }
+            $re[]=$result;
+        }
+
+        $this->assign('res',$re);
+        $this->display();
+    }
 }
