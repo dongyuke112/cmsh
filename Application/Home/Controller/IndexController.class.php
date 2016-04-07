@@ -348,28 +348,94 @@ class IndexController extends Controller
         }
     }
 
-        public
-        function discuss()
-        {
-            $id = I("id");
-            $user_id = $_SESSION["auth"]["id"];
-            $this->content_id = $id;
-            $this->user_id = $user_id;
+    public
+    function discuss()
+    {
+        $id = I("id");
+        $user_id = $_SESSION["auth"]["id"];
+        $this->content_id = $id;
+        $this->user_id = $user_id;
 
-            $this->display();
-        }
+        $this->display();
+    }
 
-        public
-        function search()
-        {
-            $this->display();
-        }
+    public
+    function search()
+    {
+        $this->display();
+    }
 
-        public
-        function searchcheck()
-        {
-            $keyword = I('keyword');
-            $writer = I("writer");
+    public
+    function searchcheck()
+    {
+        $keyword = I('keyword');
+        $writer = I("writer");
+
+        $time = I("time");
+        if ($keyword || $writer || $time) {
+            $table = M('content');
+            $condition = [
+                "title" => ["like", "%$keyword%"],
+                "username" => ["like", "%$writer%"],
+                "lt_content.created_at" => ["like", "%$time%"],
+            ];
+            if (isset($_GET["p"])) {
+                $p = $_GET["p"];
+            } else {
+                $p = 1;
+            }
+
+            $total = ceil($table->where($condition)->count());
+            $pro = $table->where($condition)->field("lt_content.id as ctid,lt_content.title,lt_content.mokuai,lt_content
+       .created_at,lt_user.username,lt_user.id")
+                ->join("left join lt_user on lt_content.user_id = lt_user.id")
+                ->order("lt_content.created_at desc")->page($p, 10)->select();
+            $res = [];
+            foreach ($pro as $item) {
+                $p = $item["mokuai"];
+                $item["p"] = $p;
+                $m = $item["mokuai"];
+                if ($m == 1) {
+                    $xx = "新手上路 ";
+                } else if ($m == 2) {
+                    $xx = "天下一统 ";
+                } else if ($m == 3) {
+                    $xx = "翰墨承云";
+                } else if ($m == 4) {
+                    $xx = "大荒布告";
+                } else if ($m == 5) {
+                    $xx = "大荒本纪";
+                } else if ($m == 6) {
+                    $xx = "荒火教";
+                } else if ($m == 7) {
+                    $xx = "天机营";
+                } else if ($m == 8) {
+                    $xx = "魍魉";
+                } else if ($m == 9) {
+                    $xx = "翎羽山庄";
+                } else if ($m == 10) {
+                    $xx = "云麓仙居";
+                } else if ($m == 11) {
+                    $xx = "太虚观";
+                } else if ($m == 12) {
+                    $xx = "弈剑听雨阁";
+                } else if ($m == 13) {
+                    $xx = "冰心堂";
+                } else if ($m == 14) {
+                    $xx = "天下之路";
+                } else if ($m == 15) {
+                    $xx = "虎印节堂";
+                } else if ($m == 16) {
+                    $xx = "映世宝鉴";
+                } else if ($m == 17) {
+                    $xx = "浮生若梦";
+                }
+                $item["mokuai"] = $xx;
+                $res[] = $item;
+            }
+
+            $this->pro = $res;
+            $this->page = $page = new Page($total, 10);
 
             $time = I("time");
             if ($keyword || $writer || $time) {
@@ -379,17 +445,11 @@ class IndexController extends Controller
                     "username" => ["like", "%$writer%"],
                     "lt_content.created_at" => ["like", "%$time%"],
                 ];
-                if (isset($_GET["p"])) {
-                    $p = $_GET["p"];
-                } else {
-                    $p = 1;
-                }
-
-                $total = ceil($table->where($condition)->count());
-                $pro = $table->where($condition)->field("lt_content.id as ctid,lt_content.title,lt_content.mokuai,lt_content
+                $total = ceil($table->where($condition)->count() / 10);
+                $pro = $table->where($condition)->field("lt_content.id,lt_content.title,lt_content.mokuai,lt_content
        .created_at,lt_user.username,lt_user.id")
                     ->join("left join lt_user on lt_content.user_id = lt_user.id")
-                    ->order("lt_content.created_at desc")->page($p, 10)->select();
+                    ->order("lt_content.created_at desc")->select();
                 $res = [];
                 foreach ($pro as $item) {
                     $p = $item["mokuai"];
@@ -433,144 +493,84 @@ class IndexController extends Controller
                     $item["mokuai"] = $xx;
                     $res[] = $item;
                 }
-
                 $this->pro = $res;
-                $this->page = $page = new Page($total, 10);
-
-                $time = I("time");
-                if ($keyword || $writer || $time) {
-                    $table = M('content');
-                    $condition = [
-                        "title" => ["like", "%$keyword%"],
-                        "username" => ["like", "%$writer%"],
-                        "lt_content.created_at" => ["like", "%$time%"],
-                    ];
-                    $total = ceil($table->where($condition)->count() / 10);
-                    $pro = $table->where($condition)->field("lt_content.id,lt_content.title,lt_content.mokuai,lt_content
-       .created_at,lt_user.username,lt_user.id")
-                        ->join("left join lt_user on lt_content.user_id = lt_user.id")
-                        ->order("lt_content.created_at desc")->select();
-                    $res = [];
-                    foreach ($pro as $item) {
-                        $p = $item["mokuai"];
-                        $item["p"] = $p;
-                        $m = $item["mokuai"];
-                        if ($m == 1) {
-                            $xx = "新手上路 ";
-                        } else if ($m == 2) {
-                            $xx = "天下一统 ";
-                        } else if ($m == 3) {
-                            $xx = "翰墨承云";
-                        } else if ($m == 4) {
-                            $xx = "大荒布告";
-                        } else if ($m == 5) {
-                            $xx = "大荒本纪";
-                        } else if ($m == 6) {
-                            $xx = "荒火教";
-                        } else if ($m == 7) {
-                            $xx = "天机营";
-                        } else if ($m == 8) {
-                            $xx = "魍魉";
-                        } else if ($m == 9) {
-                            $xx = "翎羽山庄";
-                        } else if ($m == 10) {
-                            $xx = "云麓仙居";
-                        } else if ($m == 11) {
-                            $xx = "太虚观";
-                        } else if ($m == 12) {
-                            $xx = "弈剑听雨阁";
-                        } else if ($m == 13) {
-                            $xx = "冰心堂";
-                        } else if ($m == 14) {
-                            $xx = "天下之路";
-                        } else if ($m == 15) {
-                            $xx = "虎印节堂";
-                        } else if ($m == 16) {
-                            $xx = "映世宝鉴";
-                        } else if ($m == 17) {
-                            $xx = "浮生若梦";
-                        }
-                        $item["mokuai"] = $xx;
-                        $res[] = $item;
-                    }
-                    $this->pro = $res;
-                    $this->page = new Page($total, 10);
-                    $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
-                    $this->display();
+                $this->page = new Page($total, 10);
+                $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
+                $this->display();
 
 
-                } else {
-                    $this->error("请输入搜索内容", "/home/index/search");
-                }
+            } else {
+                $this->error("请输入搜索内容", "/home/index/search");
             }
         }
+    }
 
 
     public function dissave()
-        {
-            $table = M("discuss");
-            $content = M("content");
-            $id = I("content_id");
-            if ($table->create()) {
-                $table->created_at = date("Y-m-d H:i:s");
-                $content->where("id= $id")->setInc('count', 1);
-                $table->add();
-                $this->success("", "/home/index/tiezi/id/$id");
-            } else {
-                $this->error("error", "/home/index/discuss");
-            }
+    {
+        $table = M("discuss");
+        $content = M("content");
+        $id = I("content_id");
+        if ($table->create()) {
+            $table->created_at = date("Y-m-d H:i:s");
+            $content->where("id= $id")->setInc('count', 1);
+            $table->add();
+            $this->success("", "/home/index/tiezi/id/$id");
+        } else {
+            $this->error("error", "/home/index/discuss");
         }
+    }
 
     public function medal()
-        {
-            $user = M('user');
-            $content = M('content');
-            $info = M('user_info');
-            if (isset($_GET["p"])) {
-                $p = $_GET["p"];
-            } else {
-                $p = 1;
-            }
-
-            $results = $user->join("left join lt_content on lt_user.id=lt_content.user_id left join lt_user_info on lt_user.id=lt_user_info.user_id")->page($p, 3)->select();
-            $count = $user->join("left join lt_content on lt_user.id=lt_content.user_id left join lt_user_info on lt_user.id=lt_user_info.user_id")->count();
-            $page = new Page($count, 3);
-            $re = [];
-
-            foreach ($results as $result) {
-                $result['content'] = html_entity_decode($result['content']);
-                $image = $result['imagepath'];
-                $gender = $result['gender'];
-
-                if ($gender == 'M') { //判断男女
-                    $gender = '男';
-                } else {
-                    $gender = '女';
-                }
-                $result['gender'] = $gender;
-
-                if ($image != '') { //默认图片存储
-
-                } else {
-                    $this->head = ('/public/image/defimg.gif');
-                }
-                $re[] = $result;
-            }
-
-            $this->assign("pages", $page);
-            $this->assign('res', $re);
-            $this->display();
+    {
+        $user = M('user');
+        $content = M('content');
+        $info = M('user_info');
+        if (isset($_GET["p"])) {
+            $p = $_GET["p"];
+        } else {
+            $p = 1;
         }
+
+        $results = $user->join("left join lt_content on lt_user.id=lt_content.user_id left join lt_user_info on lt_user.id=lt_user_info.user_id")->page($p, 3)->select();
+        $count = $user->join("left join lt_content on lt_user.id=lt_content.user_id left join lt_user_info on lt_user.id=lt_user_info.user_id")->count();
+        $page = new Page($count, 3);
+        $re = [];
+
+        foreach ($results as $result) {
+            $result['content'] = html_entity_decode($result['content']);
+            $image = $result['imagepath'];
+            $gender = $result['gender'];
+
+            if ($gender == 'M') { //判断男女
+                $gender = '男';
+            } else {
+                $gender = '女';
+            }
+            $result['gender'] = $gender;
+
+            if ($image != '') { //默认图片存储
+
+            } else {
+                $this->head = ('/public/image/defimg.gif');
+            }
+            $re[] = $result;
+        }
+
+        $this->assign("pages", $page);
+        $this->assign('res', $re);
+        $this->display();
+    }
 
     public function medal_user_show($id)
-        {
+    {
 
-            $info = M('user_info');
-            $condition = [
-                'id' => $id
-            ];
-            $results = $info->where($condition)->select();
-            $this->assign('res', $results);
-            $this->display();
-        }
+        $info = M('user_info');
+        $condition = [
+            'id' => $id
+        ];
+        $results = $info->where($condition)->select();
+        $this->assign('res', $results);
+        $this->display();
+    }
 }

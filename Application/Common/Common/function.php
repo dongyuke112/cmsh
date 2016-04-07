@@ -121,6 +121,18 @@ function zengjia()
        }
    }
 
+}
 
+function jinri($m=1)
+{
+    $table =M("content");
+    $date = date();
+    $arr =[
+        "mokuai"=>$m,
+        "created_at"=>["like","%$date%"],
+    ];
+    $result=$table->where($arr)->count();
+    echo "今日：";
+    echo $result;
 
 }
