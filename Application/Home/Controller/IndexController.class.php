@@ -177,13 +177,14 @@ class IndexController extends Controller
     public function mengpailist()
     {
         $table = M("content");
-        $count = $table->count();
-        $this->pager = new Page($count, 20);
+
         if (isset($_GET["m"])) {
             $m = $_GET["m"];
         } else {
             $m = 1;
         }
+        $count = $table->where("mokuai=$m")->count();
+        $this->pager = new Page($count, 20);
         if (isset($_GET["p"])) {
             $p = $_GET["p"];
         } else {
