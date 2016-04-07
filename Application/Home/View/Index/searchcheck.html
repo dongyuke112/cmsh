@@ -1,5 +1,9 @@
 <div class="col-md-8 col-md-offset-2" >
-    <div class="panel-heading">搜索结果</div>
+    <div class="panel-heading">
+        <div style="font-size: 18px;font-weight: bold">搜索结果
+            <a href="/home/index/search" style="font-size: 18px;float: right">返回</a>
+        </div>
+    </div>
     <div class="panel">
         <div class="panel-body">
             <table class="table table-bordered">
@@ -12,7 +16,7 @@
                 <volist name="pro" id="items">
                     <tr>
                         <td><a href="/home/index/tiezi/m/{$items.p}/id/{$items.id}">{$items.title}</a></td>
-                        <td>{$items.mokuai}</td>
+                        <td><a href="/home/index/mengpailist/m/{$items.p}">{$items.mokuai}</a></td>
                         <td>{$items.created_at}</td>
                         <td>{$items.username}</td>
                     </tr>

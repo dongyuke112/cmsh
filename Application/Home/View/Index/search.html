@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3">按时间搜索</label>
                         <div class="col-md-8">
-                            <input placeholder="输入作者名" name="writer" type="text" class="form-control">
+                            <input placeholder="输入时间" name="time" id="ti" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -31,6 +31,14 @@
                 </form>
             </div>
 
-
         </div>
 </div>
+<script type="text/javascript">
+    $("#ti").datetimepicker({
+            dayOfWeekStart:1,
+             timepicker:false,
+            formate:"Y-m-d"
+    });
+    $.datetimepicker.setLocale("zh");
+
+</script>

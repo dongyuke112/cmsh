@@ -194,7 +194,7 @@ class IndexController extends Controller
 
         $result = $table->field("lt_user.username,lt_content.id,lt_content.title,lt_content.created_at")->join('LEFT JOIN lt_user ON lt_user.id = lt_content.user_id')->limit($st, 20)->where("mokuai=$m")->order("lt_content.created_at desc")->select();
         $this->result = $result;
-
+        $this->pager->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
         $this->display();
 
     }
@@ -295,10 +295,16 @@ class IndexController extends Controller
             $image = M("user_info");
             $path = $image->field("imagepath")->where("user_id=$user_id")->find();
             if ($path==0) {
+
                 $this->imagepath = $path["imagepath"];
+
+
+
             } else {
-                $this->imagepath = "/public/image/defimg.gif";
+               $this->imagepath = "/public/image/defimg.gif";
             }
+
+
         }
         if (isset($_GET["m"])) {
             $m = $_GET["m"];
@@ -348,26 +354,26 @@ class IndexController extends Controller
 
     public  function searchcheck(){
         $keyword = I('keyword');
+        $writer = I("writer");
+        $time =I("time");
+        if ($keyword ||$writer || $time) {
         $table =M('content');
         $condition =[
             "title"=>["like","%$keyword%"],
+            "username"=>["like","%$writer%"],
+            "lt_content.created_at"=>["like","%$time%"],
         ];
-
-        $total=ceil($table->where($condition)->count()/10);
+            $total=ceil($table->where($condition)->count()/10);
        $pro =$table->where($condition)->field("lt_content.id,lt_content.title,lt_content.mokuai,lt_content
-       .created_at,lt_user.username")
-           ->join("left join
-       lt_user on lt_content
-       .user_id = lt_user
-       .id")
-           ->order
-        ("lt_content.created_at desc")->select();
+       .created_at,lt_user.username,lt_user.id")
+           ->join("left join lt_user on lt_content.user_id = lt_user.id")
+           ->order("lt_content.created_at desc")->select();
         $res=[];
         foreach ($pro as $item)
         {
             $p=$item["mokuai"];
             $item["p"]=$p;
-          $m=$item["mokuai"];
+            $m=$item["mokuai"];
             if($m==1)
             {
                 $xx= "新手上路 ";
@@ -411,6 +417,10 @@ class IndexController extends Controller
         $this->page= new Page($total,10);
         $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
         $this->display();
+
+        } else {
+            $this->error("请输入搜索内容","/home/index/search");
+        }
     }
 
 
