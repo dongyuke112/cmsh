@@ -1,0 +1,44 @@
+<include file="../Application/Home/view/nav.html" />
+<div class="row changerow">
+    <div class="col-md-12">
+        <div class="panel">
+            <div class="panel panel-heading">用户权限</div>
+            <div class="panel body">
+                <form  action="/home/admin/changesave" method="post">
+
+                    <div class="col-md-2">新手上路&nbsp;{:showperm('xs',$perm)?'<input  checked="checked" type="checkbox"  name="perm[]" value="1"/>':'<input  type="checkbox"  name="perm[]" value="1"/>'}</div>
+                    <div  class="col-md-2">天下一统&nbsp;{:showperm('yt',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="2"/>':'<input type="checkbox" name="perm[]" value="2"/>'}</div>
+                    <div  class="col-md-2">翰墨承云&nbsp;{:showperm('hm',$perm)?'<input  checked="checked" type="checkbox" name="perm[]" value="3"/>':'<input type="checkbox" name="perm[]" value="3"/>'}</div>
+                    <div  class="col-md-2">大荒布告&nbsp;{:showperm('bg',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="4"/>':'<input type="checkbox" name="perm[]" value="4"/>'}</div>
+                    <div  class="col-md-2">大荒本纪&nbsp;{:showperm('bj',$perm)?'<input  checked="checked" type="checkbox" name="perm[]" value="5"/>':'<input type="checkbox" name="perm[]" value="5"/>'}</div>
+                    <div  class="col-md-2">荒火教&nbsp;{:showperm('hh',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="6"/>':'<input type="checkbox" name="perm[]" value="6"/>'}</div>
+                    <div  class="col-md-2">天机营&nbsp;{:showperm('tj',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="7"/>':'<input type="checkbox" name="perm[]" value="7"/>'}</div>
+                    <div  class="col-md-2">魍魉&nbsp;&nbsp;{:showperm('wl',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="9"/>':'<input type="checkbox" name="perm[]" value="9"/>'}</div>
+                    <div  class="col-md-2">翎羽山庄&nbsp;{:showperm('ly',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="8"/>':'<input type="checkbox" name="perm[]" value="8"/>'}</div>
+                    <div  class="col-md-2">云麓仙居&nbsp;{:showperm('yl',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="10"/>':'<input type="checkbox" name="perm[]" value="10"/>'}</div>
+                    <div  class="col-md-2">太虚观&nbsp;{:showperm('tx',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="11"/>':'<input type="checkbox" name="perm[]" value="11"/>'}</div>
+                    <div  class="col-md-2">弈剑听雨阁&nbsp;{:showperm('yj',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="12"/>':'<input type="checkbox" name="perm[]" value="12"/>'}</div>
+                    <div  class="col-md-2">冰心堂&nbsp;{:showperm('bx',$perm)?' <input checked="checked" type="checkbox" name="perm[]" value="13"/>':'<input type="checkbox" name="perm[]" value="13"/>'}</div>
+                    <div  class="col-md-2">天下之路&nbsp;{:showperm('txzl',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="14"/>':'<input type="checkbox" name="perm[]" value="14"/>'}</div>
+                    <div  class="col-md-2">虎印节堂&nbsp;{:showperm('hyjt',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="15"/>':'<input type="checkbox" name="perm[]" value="15"/>'}</div>
+                    <div  class="col-md-2">映世宝鉴&nbsp;{:showperm('ysbj',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="16"/>':'<input type="checkbox" name="perm[]" value="16"/>'}</div>
+                    <div  class="col-md-2">浮生若梦&nbsp;{:showperm('fsrm',$perm)?'<input checked="checked" type="checkbox" name="perm[]" value="17"/>':'<input type="checkbox" name="perm[]" value="17"/>'}</div>
+                     <div class="col-md-12">
+                         <input type="hidden" name="id" value="{$id}">
+                         <input type="submit" class="form-control" value="保存">
+                     </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style type="text/css">
+    .changerow
+    {
+        height: 400px;
+        background-color: white;
+    }
+</style>

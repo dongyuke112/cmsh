@@ -296,19 +296,11 @@ class IndexController extends Controller
             $image = M("user_info");
             $path = $image->field("imagepath")->where("user_id=$user_id")->find();
 
-            if ($path = null) {
-                $this->imagepath = $path["imagepath"];
-            } else {
-                $this->imagepath = "/public/image/defimg.gif";
-
-
                 if ($path == 0) {
 
-                    $this->imagepath = $path["imagepath"];
-
-
-                } else {
                     $this->imagepath = "/public/image/defimg.gif";
+                } else {
+                    $this->imagepath = $path["imagepath"];
 
                 }
 
@@ -346,10 +338,10 @@ class IndexController extends Controller
             $this->result = $xx;
             $this->display();
         }
-    }
 
-    public
-    function discuss()
+
+
+    public function discuss()
     {
         $id = I("id");
         $user_id = $_SESSION["auth"]["id"];
@@ -359,14 +351,14 @@ class IndexController extends Controller
         $this->display();
     }
 
-    public
-    function search()
-    {
-        $this->display();
-    }
 
-    public
-    function searchcheck()
+        public    function search()
+        {
+            $this->display();
+        }
+
+
+    public function searchcheck()
     {
         $keyword = I('keyword');
         $writer = I("writer");
@@ -433,76 +425,18 @@ class IndexController extends Controller
                 $item["mokuai"] = $xx;
                 $res[] = $item;
             }
-
             $this->pro = $res;
             $this->page = $page = new Page($total, 10);
+            $this->display();
 
-            $time = I("time");
-            if ($keyword || $writer || $time) {
-                $table = M('content');
-                $condition = [
-                    "title" => ["like", "%$keyword%"],
-                    "username" => ["like", "%$writer%"],
-                    "lt_content.created_at" => ["like", "%$time%"],
-                ];
-                $total = ceil($table->where($condition)->count() / 10);
-                $pro = $table->where($condition)->field("lt_content.id,lt_content.title,lt_content.mokuai,lt_content
-       .created_at,lt_user.username,lt_user.id")
-                    ->join("left join lt_user on lt_content.user_id = lt_user.id")
-                    ->order("lt_content.created_at desc")->select();
-                $res = [];
-                foreach ($pro as $item) {
-                    $p = $item["mokuai"];
-                    $item["p"] = $p;
-                    $m = $item["mokuai"];
-                    if ($m == 1) {
-                        $xx = "新手上路 ";
-                    } else if ($m == 2) {
-                        $xx = "天下一统 ";
-                    } else if ($m == 3) {
-                        $xx = "翰墨承云";
-                    } else if ($m == 4) {
-                        $xx = "大荒布告";
-                    } else if ($m == 5) {
-                        $xx = "大荒本纪";
-                    } else if ($m == 6) {
-                        $xx = "荒火教";
-                    } else if ($m == 7) {
-                        $xx = "天机营";
-                    } else if ($m == 8) {
-                        $xx = "魍魉";
-                    } else if ($m == 9) {
-                        $xx = "翎羽山庄";
-                    } else if ($m == 10) {
-                        $xx = "云麓仙居";
-                    } else if ($m == 11) {
-                        $xx = "太虚观";
-                    } else if ($m == 12) {
-                        $xx = "弈剑听雨阁";
-                    } else if ($m == 13) {
-                        $xx = "冰心堂";
-                    } else if ($m == 14) {
-                        $xx = "天下之路";
-                    } else if ($m == 15) {
-                        $xx = "虎印节堂";
-                    } else if ($m == 16) {
-                        $xx = "映世宝鉴";
-                    } else if ($m == 17) {
-                        $xx = "浮生若梦";
-                    }
-                    $item["mokuai"] = $xx;
-                    $res[] = $item;
+
+
+                } else {
+                    $this->error("请输入搜索内容", "/home/index/search");
                 }
-                $this->pro = $res;
-                $this->page = new Page($total, 10);
-                $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
-                $this->display();
 
 
-            } else {
-                $this->error("请输入搜索内容", "/home/index/search");
-            }
-        }
+
     }
 
 

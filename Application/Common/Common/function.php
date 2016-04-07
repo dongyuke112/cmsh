@@ -136,3 +136,12 @@ function jinri($m=1)
     echo $result;
 
 }
+function showperm($xx,$arr)
+{
+
+    if(in_array($xx,$arr)){
+        return true;
+    } else {
+        return false;
+    };
+}
