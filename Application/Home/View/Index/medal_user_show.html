@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/Public/boot/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <a href="/home/index/index/medal" class="btn btn-info"style="margin-left: 195px;">回首页</a>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">用户显示页</div>
+                <div class="panel-body">
+                    <table class="table table" style="height: 250px;width: 700px;">
+                        <tr>
+                            <td>用户名</td>
+                            <!--<td>性别</td>-->
+                            <td>生日</td>
+                            <td>手机</td>
+                            <td>Email</td>
+                            <td>签名</td>
+                            <td>创建时间</td>
+                        </tr>
+                        <volist name="res" id="re">
+                            <tr>
+                                <td>{$re.name}</td>
+                                <td>{$re.birthday}</td>
+                                <td>{$re.mobile}</td>
+                                <td>{$re.email}</td>
+                                <td>{$re.sign}</td>
+                            </tr>
+                        </volist>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
