@@ -1,0 +1,55 @@
+<include file="../Application/Home/view/nav.html" />
+<div class="row addperm">
+    <div class="col-md-4">
+        <div class="panel">
+            <div class="panel-heading">搜索</div>
+            <div class="panel-body">
+                <form action="/home/admin/addperm" method="get" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">用户名</label>
+                        <div class="col-md-8">
+                            <input class="form-control" name="username"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"><a href="/home/admin/addperm" class="btn ">重置</a></label>
+                        <div class="col-md-8">
+                            <input class="form-control" type="submit" value="提交"/>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="panel"></div>
+        <div class="panel-heading">用户列表</div>
+        <div class="panel-body">
+          <table class="table table-border">
+              <tr>
+                  <th>id</th>
+                  <th>用户名</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+              </tr>
+              <volist name="result" id="items">
+                  <tr>
+                      <td>{$items.id}</td>
+                      <td>{$items.username}</td>
+                      <td>{$items.created_at}</td>
+                  </tr>
+              </volist>
+          </table>
+            {$page->show()}
+        </div>
+
+    </div>
+</div>
+<style type="text/css">
+    .addperm{
+        background-color: white;
+        height: 550px;
+    }
+</style>
