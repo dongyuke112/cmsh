@@ -20,7 +20,8 @@ class AdminController extends Controller
         $password=md5("$password");
       $arr=[
           "username"=>$username,
-          "password"=>$password
+          "password"=>$password,
+          "softdelete"=>0
       ];
         $find=$table->where($arr)->find();
 
@@ -29,7 +30,9 @@ class AdminController extends Controller
             $_SESSION["admin"]["user_id"]=$find["id"];
 
             $id=$find["id"];
+
              if($find["perm"]==1){
+                 $_SESSION["admin"]["root"]=1;
                  $this->success("","/home/admin/alllist");
              } else {
               $perm=M("perm");
@@ -91,16 +94,22 @@ class AdminController extends Controller
         } else {
             $p=1;
         }
+        $count=$table->count();
+        $page=new Page($count,10);
         $st=($p-1)*10;
+
+
         $keyword=I("keyword");
         if($keyword){
             $con["username"]=["like","%$keyword%"];
-            $result=$table->where($con)->limit($st,10)->select();
+            $result=$table->where($con)->page($p,10)->select();
+
+                $page->parameter.="&keyword=$keyword";
+
         } else {
             $result=$table->limit($st,10)->select();
         }
-        $count=$table->count();
-        $page=new Page($count,10);
+
         $this->page=$page;
         $this->result=$result;
         $this->display();
@@ -109,6 +118,9 @@ class AdminController extends Controller
     {
         $this->name= $_SESSION["admin"]["username"];
         $this->display();
+        if(isset($_GET["m"])){
+          $this->m=  $m=$_GET["m"];
+        }
     }
     public function softdel()
     {
