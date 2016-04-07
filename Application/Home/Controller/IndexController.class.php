@@ -80,6 +80,7 @@ class IndexController extends Controller
         $arr = [
             "username" => I("username"),
             "password" => $password,
+            "softdelete"=>0
         ];
         $result = $table->where($arr)->find();
         if ($result["id"]) {

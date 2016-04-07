@@ -1,16 +1,42 @@
 <include file="../Application/Home/view/nav.html" />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="panel-heading"></div>
         <div class="panel-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="post" action="/home/admin/userlist">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">用户名：</label>
-                    <div class="col-md-9">
+                    <label class="col-md-4 control-label">用户名：</label>
+                    <div class="col-md-8">
                         <input name="keyword"/>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="panel ">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>id</th>
+                        <th>用户名</th>
+                        <th>注册时间</th>
+                        <th>是否软删除</th>
+                        <th>操作</th>
+                    </tr>
+                    <volist name="result" id="items">
+                        <tr>
+                            <td>{$items.id}</td>
+                            <td>{$items.username}</td>
+                            <td>{$items.created_at}</td>
+                            <td><if condition="$items.softdelete==1 ">是<else/>否</if></td>
+                            <td><a href="/home/admin/softdel/id/{$items.id}">删除</a></td>
+                        </tr>
+                    </volist>
+                </table>
+                {$page->show()}
+            </div>
         </div>
     </div>
 </div>

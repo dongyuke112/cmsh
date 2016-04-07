@@ -84,9 +84,26 @@ class AdminController extends Controller
     {
         $table=M("user");
         $count=$table->count();
-        $page=new Page(100,20);
+        $page=new Page($count,10);
         $this->page=$page;
-       $result=$table->select();
+        if(isset($_GET["p"]))
+        {
+            $p=$_GET["p"];
+        } else {
+            $p=0;
+        }
+       $result=$table->limit($p,10)->select();
+        $this->result=$result;
         $this->display();
     }
+    public function mk()
+    {
+        $this->name= $_SESSION["admin"]["username"];
+        $this->display();
+    }
+    public function softdel()
+    {
+         $id=I("id");
+    }
+
 }
