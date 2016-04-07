@@ -197,14 +197,16 @@ class AdminController extends Controller
         $prem = I("perm");
         $id = I("id");
         $table = M("user_perm");
-        $table->delete($id);
+        $table->where("user_id=$id")->delete();
         if($prem){
             foreach ($prem as $items){
-
+              $table->user_id=$id;
+                $table->perm_id=$items;
+                $table->add();
 
             }
         }
-
+          $this->success("","/home/admin/addperm");
 
     }
 
