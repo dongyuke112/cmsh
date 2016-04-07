@@ -94,22 +94,17 @@ class AdminController extends Controller
         } else {
             $p=1;
         }
-        $count=$table->count();
-        $page=new Page($count,10);
-        $st=($p-1)*10;
-
-
         $keyword=I("keyword");
+        $condition=[
+            "username"=>["like","%$keyword%"]
+        ];
+        $result=$table->where($condition)->page($p,10)->select();
+       $count= $table->where($condition)->count();
+        $page=new Page($count,10);
+
         if($keyword){
-            $con["username"]=["like","%$keyword%"];
-            $result=$table->where($con)->page($p,10)->select();
-
-                $page->parameter.="&keyword=$keyword";
-
-        } else {
-            $result=$table->limit($st,10)->select();
+            $page->parameter.="&keyword=$keyword";
         }
-
         $this->page=$page;
         $this->result=$result;
         $this->display();
@@ -120,6 +115,7 @@ class AdminController extends Controller
         $this->display();
         if(isset($_GET["m"])){
           $this->m=  $m=$_GET["m"];
+
         }
     }
     public function softdel()
@@ -147,6 +143,34 @@ class AdminController extends Controller
         } else {
             $this->error("","/home/admin/userlist");
         }
+    }
+    public function addperm()
+    {
+        $this->name= $_SESSION["admin"]["username"];
+        $table=M("user");
+        $username=I("username");
+        $conction=[
+            "username"=>["like","%$username%"]
+        ];
+        if(isset($_GET["p"])){
+            $p=$_GET["p"];
+        } else {
+            $p=1;
+        }
+        $count=$table->where($conction)->count();
+        $result=$table->where($conction)->page($p,2)->select();
+        $this->result=$result;
+        $page=new Page($count,2);
+        if($username)
+        {
+            $page->parameter.=$_GET["username"];
+        }
+
+        $this->page=$page;
+
+
+        $this->display();
+
     }
 
 }
