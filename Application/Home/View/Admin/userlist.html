@@ -1,5 +1,5 @@
 <include file="../Application/Home/view/nav.html" />
-<div class="row">
+<div class="row fullscreen">
     <div class="col-md-3">
         <div class="panel-heading"></div>
         <div class="panel-body">
@@ -7,7 +7,13 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label">用户名：</label>
                     <div class="col-md-8">
-                        <input name="keyword"/>
+                        <input name="keyword"  />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label"><a href="/home/admin/userlist" >重置</a></label>
+                    <div class="col-md-7">
+                        <input type="submit"  class="form-control" value="搜索"/>
                     </div>
                 </div>
             </form>
@@ -30,8 +36,14 @@
                             <td>{$items.id}</td>
                             <td>{$items.username}</td>
                             <td>{$items.created_at}</td>
-                            <td><if condition="$items.softdelete==1 ">是<else/>否</if></td>
-                            <td><a href="/home/admin/softdel/id/{$items.id}">删除</a></td>
+                            <td><if condition="$items['softdelete']==1">是<else/>否</if></td>
+                            <td>
+                                <if condition="$items['softdelete']==1">
+                                    <a href="/home/admin/recover/id/{$items.id}">恢复</a>
+                                    <else/><a href="/home/admin/softdel/id/{$items.id}">删除</a>
+                                </if>
+
+                            </td>
                         </tr>
                     </volist>
                 </table>
@@ -40,3 +52,10 @@
         </div>
     </div>
 </div>
+<style type="text/css">
+    .fullscreen
+    {
+        background-color: white;
+        height: 560px;
+    }
+</style>

@@ -172,10 +172,7 @@ class IndexController extends Controller
 
 
     }
-    public function userinfoupdate()
-    {
 
-    }
 
     public function mengpailist()
     {
@@ -190,11 +187,12 @@ class IndexController extends Controller
         if (isset($_GET["p"])) {
             $p = $_GET["p"];
         } else {
-            $p = 0;
+            $p = 1;
         }
         $this->p = $m;
+        $st=($p-1)*20;
 
-        $result = $table->field("lt_user.username,lt_content.id,lt_content.title,lt_content.created_at")->join('LEFT JOIN lt_user ON lt_user.id = lt_content.user_id')->limit($p, 20)->where("mokuai=$m")->order("lt_content.created_at desc")->select();
+        $result = $table->field("lt_user.username,lt_content.id,lt_content.title,lt_content.created_at")->join('LEFT JOIN lt_user ON lt_user.id = lt_content.user_id')->limit($st, 20)->where("mokuai=$m")->order("lt_content.created_at desc")->select();
         $this->result = $result;
 
         $this->display();
@@ -296,7 +294,7 @@ class IndexController extends Controller
             $this->user = $res->field("username")->where("id=$user_id")->find();
             $image = M("user_info");
             $path = $image->field("imagepath")->where("user_id=$user_id")->find();
-            if ($path) {
+            if ($path==0) {
                 $this->imagepath = $path["imagepath"];
             } else {
                 $this->imagepath = "/public/image/defimg.gif";

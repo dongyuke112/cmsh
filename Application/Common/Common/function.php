@@ -94,5 +94,5 @@ function mengpai()
 }
 function is_perm()
 {
-
+    if(isset($_SESSION["admin"])){}
 }
