@@ -1,0 +1,24 @@
+<div class="col-md-8 col-md-offset-2" >
+    <div class="panel-heading">搜索结果</div>
+    <div class="panel">
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>关键词搜索结果</th>
+                    <th>所在模块</th>
+                    <th>发布时间</th>
+                    <th>发布作者</th>
+                </tr>
+                <volist name="pro" id="items">
+                    <tr>
+                        <td><a href="/home/index/tiezi/m/{$items.p}/id/{$items.id}">{$items.title}</a></td>
+                        <td>{$items.mokuai}</td>
+                        <td>{$items.created_at}</td>
+                        <td>{$items.username}</td>
+                    </tr>
+                </volist>
+            </table>
+        </div>
+    </div>
+
+</div>
