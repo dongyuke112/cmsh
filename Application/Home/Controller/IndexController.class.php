@@ -176,6 +176,7 @@ class IndexController extends Controller
 
     public function mengpailist()
     {
+
         $table = M("content");
 
         if (isset($_GET["m"])) {
@@ -185,6 +186,7 @@ class IndexController extends Controller
         }
         $count = $table->where("mokuai=$m")->count();
         $this->pager = new Page($count, 20);
+
         if (isset($_GET["p"])) {
             $p = $_GET["p"];
         } else {
@@ -295,14 +297,11 @@ class IndexController extends Controller
             $this->user = $res->field("username")->where("id=$user_id")->find();
             $image = M("user_info");
             $path = $image->field("imagepath")->where("user_id=$user_id")->find();
-            if ($path==0) {
-
+            if ($path=null){
                 $this->imagepath = $path["imagepath"];
-
-
-
             } else {
                $this->imagepath = "/public/image/defimg.gif";
+
             }
 
 
@@ -364,11 +363,17 @@ class IndexController extends Controller
             "username"=>["like","%$writer%"],
             "lt_content.created_at"=>["like","%$time%"],
         ];
-            $total=ceil($table->where($condition)->count()/10);
-       $pro =$table->where($condition)->field("lt_content.id,lt_content.title,lt_content.mokuai,lt_content
+            if(isset($_GET["p"])){
+                $p=$_GET["p"];
+            } else {
+                $p=1;
+            }
+
+            $total=ceil($table->where($condition)->count());
+       $pro =$table->where($condition)->field("lt_content.id as ctid,lt_content.title,lt_content.mokuai,lt_content
        .created_at,lt_user.username,lt_user.id")
            ->join("left join lt_user on lt_content.user_id = lt_user.id")
-           ->order("lt_content.created_at desc")->select();
+           ->order("lt_content.created_at desc")->page($p,10)->select();
         $res=[];
         foreach ($pro as $item)
         {
@@ -414,9 +419,10 @@ class IndexController extends Controller
             $item["mokuai"]=$xx;
             $res[]=$item;
         }
+
         $this->pro=$res;
-        $this->page= new Page($total,10);
-        $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
+            $this->page=$page= new Page($total,10);
+         /*   $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");*/
         $this->display();
 
         } else {
