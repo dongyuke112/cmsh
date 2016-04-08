@@ -231,6 +231,7 @@ class IndexController extends Controller
         $m= I("mokuai");
         $table->create();
         $table->created_at = date("Y-m-d H:i:s");
+        $table->user_id=$_SESSION["auth"]["id"];
         $xx = $table->add();
         if ($xx) {
             $this->success("", "/home/index/tiezi/id/$xx/m/$m");

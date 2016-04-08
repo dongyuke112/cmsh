@@ -21,6 +21,7 @@ function auth()
         $userin=  $user->where("id=$id")->find();
         if($reslut){
             $_SESSION["auth"]["username"]=$userin["username"];
+            $_SESSION["auth"]["id"]= $id;
             $res=true;
         }
     }
