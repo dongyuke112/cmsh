@@ -138,13 +138,15 @@ class IndexController extends Controller
         $image->exts = [
             "jpg", "jpeg", "png", "bmp"
         ];
-        $e = $image->uploadOne($_FILES["name"]);
+        $e = $image->uploadone($_FILES["name"]);
         $savename = $e['savename'];
         $savepath = $e['savepath'];
-        $thumb = new Image();
+      $thumb = new Image();
         $thumb->open("Uploads/$savepath$savename");
         $thumb->thumb(120, 120, \Think\Image::IMAGE_THUMB_FILLED)->save("Uploads/{$savepath}s$savename");
         $user_path = "/Uploads/{$savepath}s$savename";
+
+
         $table = M("User_info");
         $table->create();
         $table->imagepath = $user_path;
@@ -164,7 +166,7 @@ class IndexController extends Controller
         if ($a && $b && $c && $d && $e) {
             $this->success("成功保存", "/home/index/index");
         } else {
-            $this->error("错误", "home/index/userinfo");
+            $this->error("错误", "/home/index/userinfo");
         }
 
 
@@ -370,7 +372,6 @@ class IndexController extends Controller
     {
         $keyword = I('keyword');
         $writer = I("writer");
-
         $time = I("time");
         if ($keyword || $writer || $time) {
             $table = M('content');
@@ -437,72 +438,11 @@ class IndexController extends Controller
             $this->pro = $res;
             $this->page = $page = new Page($total, 10);
 
-            $time = I("time");
-            if ($keyword || $writer || $time) {
-                $table = M('content');
-                $condition = [
-                    "title" => ["like", "%$keyword%"],
-                    "username" => ["like", "%$writer%"],
-                    "lt_content.created_at" => ["like", "%$time%"],
-                ];
-                $total = ceil($table->where($condition)->count() / 10);
-                $pro = $table->where($condition)->field("lt_content.id,lt_content.title,lt_content.mokuai,lt_content
-       .created_at,lt_user.username,lt_user.id")
-                    ->join("left join lt_user on lt_content.user_id = lt_user.id")
-                    ->order("lt_content.created_at desc")->select();
-                $res = [];
-                foreach ($pro as $item) {
-                    $p = $item["mokuai"];
-                    $item["p"] = $p;
-                    $m = $item["mokuai"];
-                    if ($m == 1) {
-                        $xx = "新手上路 ";
-                    } else if ($m == 2) {
-                        $xx = "天下一统 ";
-                    } else if ($m == 3) {
-                        $xx = "翰墨承云";
-                    } else if ($m == 4) {
-                        $xx = "大荒布告";
-                    } else if ($m == 5) {
-                        $xx = "大荒本纪";
-                    } else if ($m == 6) {
-                        $xx = "荒火教";
-                    } else if ($m == 7) {
-                        $xx = "天机营";
-                    } else if ($m == 8) {
-                        $xx = "魍魉";
-                    } else if ($m == 9) {
-                        $xx = "翎羽山庄";
-                    } else if ($m == 10) {
-                        $xx = "云麓仙居";
-                    } else if ($m == 11) {
-                        $xx = "太虚观";
-                    } else if ($m == 12) {
-                        $xx = "弈剑听雨阁";
-                    } else if ($m == 13) {
-                        $xx = "冰心堂";
-                    } else if ($m == 14) {
-                        $xx = "天下之路";
-                    } else if ($m == 15) {
-                        $xx = "虎印节堂";
-                    } else if ($m == 16) {
-                        $xx = "映世宝鉴";
-                    } else if ($m == 17) {
-                        $xx = "浮生若梦";
-                    }
-                    $item["mokuai"] = $xx;
-                    $res[] = $item;
-                }
-                $this->pro = $res;
-                $this->page = new Page($total, 10);
-                $this->page->setConfig("theme", "%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%");
-                $this->display();
-
 
             } else {
                 $this->error("请输入搜索内容", "/home/index/search");
             }
-        }
+
     }
 
 

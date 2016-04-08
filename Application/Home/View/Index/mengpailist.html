@@ -2,7 +2,7 @@
 
 <div class="row">
 <ul class="breadcrumb">
-    <li><a href="/home/index/index">论坛首页</a></li>
+    <li><a href="/home/admin/index">论坛首页</a></li>
     <li><a href="/home/index/mengpailist/m/{$p}">{:mengpai()}</a></li>
 </ul>
     <div class="col-md-1 danghang">
@@ -39,14 +39,14 @@
             </ul>
         </div>
     </div>
-    <div class="col-md-11">
+   <div class="col-md-11">
         <div class="col-md-12">
             <p>版主</p>
             <img src="IMAGE_PATH/huanghuo.jpg" width="900px" height="450px" class="ye_image_list">
         </div>
         <div class="col-md-7 fatie" ><if condition="$p!=4&&$p!=5" ><a href="/home/index/fatie"><img src="IMAGE_PATH/fatie.png" class="ye_image"/></a></if></div>
         <div class="col-md-5">
-            {$pager->show()}
+             {$pager->show()}
         </div>
         <div class="col-md-12 top_model" >
 

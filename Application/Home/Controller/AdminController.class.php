@@ -111,12 +111,21 @@ class AdminController extends Controller
     }
     public function mk()
     {
-        $this->name= $_SESSION["admin"]["username"];
-        $this->display();
-        if(isset($_GET["m"])){
-          $this->m=  $m=$_GET["m"];
 
+        $this->name= $_SESSION["admin"]["username"];
+        if(isset($_GET["m"])){
+          $this->m= $m=$_GET["m"];
         }
+        $table =M("content");
+            $s = I("s","");
+        $arr = [
+            "mokuai" => $m,
+        ];
+            if ($s) {
+                $arr["title"] = ["like", "%$s%"];
+            }
+        $this->result= $table->where($arr)->select();
+        $this->display();
     }
     public function softdel()
     {
@@ -172,5 +181,18 @@ class AdminController extends Controller
         $this->display();
 
     }
+    public  function  deletetie(){
+        if(isset($_GET["m"])){
+            $this->m= $m=$_GET["m"];
+        }
+        if(isset($_GET["id"])){
+            $this->id= $id=$_GET["id"];
+        }
+        $table =M("content");
+        $table->where("mokuai=$m AND id =$id")->delete();
+        $this->redirect("/home/admin/mk/m/$m");
+
+    }
+
 
 }

@@ -1,16 +1,56 @@
 <include file="../Application/Home/view/nav.html" />
 <div class="row">
-   <div class="col-md-4">
+   <ul class="breadcrumb">
+      <li><a href="/home/admin/alllist">用户首页</a></li>
+      <li><a>{:mengpai()}</a></li>
+   </ul>
+   <div class="col-md-3">
       <div class="panel">
          <div class="panel-heading">搜索</div>
          <div class="panel-body">
             <form action="/home/admin/mk/m/{$m}" method="post" class="form-horizontal">
-
+               <div class="form-group">
+                  <label class="control-label col-md-3">输入</label>
+                  <div class="col-md-8">
+                     <input class="form-control"type="text" name="s">
+                  </div>
+               </div>
+               <input class="form-control" type="submit" value="提交">
             </form>
          </div>
       </div>
    </div>
    <div class="col-md-8">
+      <div class="col-md-11">
+         <div class="col-md-12">
+            <p>版主</p>
+           <img src="{:mkimg()}"width="900px" height="450px" class="ye_image_list">
+         </div>
+
+         <div class="col-md-5">
+
+         </div>
+         <div class="col-md-12 top_model" >
+
+         </div>
+         <div class="col-md-12 normal_model" >
+            <ul>
+               <volist name="result" id="items">
+                  <li><img src="IMAGE_PATH/list.png" width="20px" height="20px">
+                     <a href="/home/index/tiezi/id/{$items.id}/m/{$p}">{$items.title}</a>
+                     <span>发帖人：{$items.username}</span> <span>发帖时间：{$items.created_at}</span>
+                     <span style="float: right;font-weight: bold"><a
+                             href="/home/admin/deletetie/id/{$items.id}/m/{$m}">删除
+                     </a></span>
+                  </li>
+               </volist>
+            </ul>
+         </div>
+
+      </div>
+
+
+
 
    </div>
 
