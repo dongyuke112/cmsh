@@ -298,19 +298,11 @@ class IndexController extends Controller
             $image = M("user_info");
             $path = $image->field("imagepath")->where("user_id=$user_id")->find();
 
-            if ($path = null) {
-                $this->imagepath = $path["imagepath"];
-            } else {
-                $this->imagepath = "/public/image/defimg.gif";
-
-
                 if ($path == 0) {
 
-                    $this->imagepath = $path["imagepath"];
-
-
-                } else {
                     $this->imagepath = "/public/image/defimg.gif";
+                } else {
+                    $this->imagepath = $path["imagepath"];
 
                 }
 
@@ -348,10 +340,10 @@ class IndexController extends Controller
             $this->result = $xx;
             $this->display();
         }
-    }
 
-    public
-    function discuss()
+
+
+    public function discuss()
     {
         $id = I("id");
         $user_id = $_SESSION["auth"]["id"];
@@ -361,14 +353,14 @@ class IndexController extends Controller
         $this->display();
     }
 
-    public
-    function search()
-    {
-        $this->display();
-    }
 
-    public
-    function searchcheck()
+        public    function search()
+        {
+            $this->display();
+        }
+
+
+    public function searchcheck()
     {
         $keyword = I('keyword');
         $writer = I("writer");
@@ -434,14 +426,18 @@ class IndexController extends Controller
                 $item["mokuai"] = $xx;
                 $res[] = $item;
             }
-
             $this->pro = $res;
             $this->page = $page = new Page($total, 10);
+            $this->display();
 
 
-            } else {
-                $this->error("请输入搜索内容", "/home/index/search");
-            }
+
+
+                } else {
+                    $this->error("请输入搜索内容", "/home/index/search");
+                }
+
+
 
     }
 

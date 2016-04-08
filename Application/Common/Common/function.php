@@ -145,38 +145,47 @@ function mkimg()
             echo "/Public/image/mk_1.jpg";
         } else if ($m == 2) {
             echo "/Public/image/mk_2.jpg";
-        }else if ($m == 3) {
+        } else if ($m == 3) {
             echo "/Public/image/mk_3.jpg";
-        }else if ($m == 4) {
+        } else if ($m == 4) {
             echo "/Public/image/mk_8.jpg";
-        }else if ($m == 5) {
+        } else if ($m == 5) {
             echo "/Public/image/mk_9.png";
-        }else if ($m == 6) {
+        } else if ($m == 6) {
             echo "/Public/image/mk_10.png";
-        }else if ($m == 7) {
+        } else if ($m == 7) {
             echo "/Public/image/mk_7.jpg";
-        }else if ($m == 8) {
+        } else if ($m == 8) {
             echo "/Public/image/mk_8.jpg";
-        }else if ($m == 9) {
+        } else if ($m == 9) {
             echo "/Public/image/mk_9.png";
-        }else if ($m == 10) {
+        } else if ($m == 10) {
             echo "/Public/image/mk_10.png";
-        }else if ($m == 11) {
+        } else if ($m == 11) {
             echo "/Public/image/mk_11.jpg";
-        }else if ($m == 12) {
+        } else if ($m == 12) {
             echo "/Public/image/mk_12.jpg";
-        }else if ($m == 13) {
+        } else if ($m == 13) {
             echo "/Public/image/mk_13.jpg";
-        }else if ($m == 14) {
+        } else if ($m == 14) {
             echo "/Public/image/mk_14.jpg";
-        }else if ($m == 15) {
+        } else if ($m == 15) {
             echo "/Public/image/mk_15.jpg";
-        }else if ($m == 16) {
+        } else if ($m == 16) {
             echo "/Public/image/mk_16.jpg";
-        }else if ($m == 17) {
+        } else if ($m == 17) {
             echo "/Public/image/mk_17.jpg";
-        }else if ($m == 18) {
+        } else if ($m == 18) {
             echo "/Public/image/mk_1.jpg";
         }
     }
 }
+    function showperm($xx, $arr)
+    {
+
+        if (in_array($xx, $arr)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
