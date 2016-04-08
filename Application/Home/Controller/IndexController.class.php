@@ -287,6 +287,7 @@ class IndexController extends Controller
 
     public function tiezi()
     {
+
         $id = I("id");
         if ($id) {
             $table = M("content");
@@ -299,66 +300,79 @@ class IndexController extends Controller
             $image = M("user_info");
             $path = $image->field("imagepath")->where("user_id=$user_id")->find();
 
-                if ($path == 0) {
+            if ($path == 0) {
 
-                    $this->imagepath = "/public/image/defimg.gif";
-                } else {
-                    $this->imagepath = $path["imagepath"];
-
-                }
-
-
-            }
-            if (isset($_GET["m"])) {
-                $m = $_GET["m"];
+                $this->imagepath = "/public/image/defimg.gif";
             } else {
-                $m = 1;
+                $this->imagepath = $path["imagepath"];
+
             }
-            if (isset($_GET["p"])) {
-                $p = $_GET["p"];
-            } else {
-                $p = 1;
-            }
-            $start = ($p - 1) * 5;
 
 
-            $disucss = M("discuss");
-            $count = $disucss->where("content_id=$id")->count();
-            $this->pager = new Page($count, 5);
-            $this->p = $m;
-            $sql = "select lt_discuss.*,lt_user_info.imagepath,lt_user.username from lt_discuss left join lt_content on lt_discuss.content_id=lt_content.id left join lt_user on lt_discuss.user_id=lt_user.id left join lt_user_info on lt_discuss.user_id=lt_user_info.user_id where lt_discuss.content_id=$id  order by lt_discuss.created_at  desc  limit $start,5 ";
-            $result = $disucss->query($sql);
-            $xx = [];
-            foreach ($result as $items) {
+        }
+        if (isset($_GET["m"])) {
+            $m = $_GET["m"];
+        } else {
+            $m = 1;
+        }
+        $this->m=$m;
+        if (isset($_GET["p"])) {
+            $p = $_GET["p"];
+        } else {
+            $p = 1;
+        }
+        $start = ($p - 1) * 10;
 
-                if ($items["imagepath"] == null) {
-                    $items["imagepath"] = "/public/image/defimg.gif";
+
+        $disucss = M("discuss");
+        $count = $disucss->where("content_id=$id and parentid=0")->count();
+        $this->pager = new Page($count, 10);
+        $this->p = $m;
+        $sql = "select lt_discuss.*,lt_user_info.imagepath,lt_user.username from lt_discuss left join lt_content on lt_discuss.content_id=lt_content.id left join lt_user on lt_discuss.user_id=lt_user.id left join lt_user_info on lt_discuss.user_id=lt_user_info.user_id where lt_discuss.content_id=$id  and parentid=0 order by lt_discuss.created_at  desc  limit $start,10 ";
+       $sql1="select lt_discuss.*,lt_user_info.imagepath,lt_user.username from lt_discuss left join lt_content on lt_discuss.content_id=lt_content.id left join lt_user on lt_discuss.user_id=lt_user.id left join lt_user_info on lt_discuss.user_id=lt_user_info.user_id where lt_discuss.content_id=$id  and parentid!=0 order by lt_discuss.created_at  desc  limit $start,10 ";
+       $result1=$disucss->query($sql1);
+        $result = $disucss->query($sql);
+        foreach ($result as $items) {
+            for($i=0;$i<count($result1);$i++){
+                if($items["id"]==$result1["$i"]["parentid"]){
+                    if ($result1["$i"]["imagepath"] == null) {
+                        $result1["$i"]["imagepath"] = "/public/image/defimg.gif";
+                    }
+                    $items["discuss"]["$i"]=$result1["$i"];
                 }
-                $items["content"] = html_entity_decode($items["content"]);
-                $xx[] = $items;
             }
 
-            $this->result = $xx;
-            $this->display();
+            if ($items["imagepath"] == null) {
+                $items["imagepath"] = "/public/image/defimg.gif";
+            }
+            $items["content"] = html_entity_decode($items["content"]);
+
+            $xx[] = $items;
         }
 
+
+        $this->result = $xx;
+        $this->display();
+    }
 
 
     public function discuss()
     {
         $id = I("id");
+        $m=I("m");
         $user_id = $_SESSION["auth"]["id"];
         $this->content_id = $id;
         $this->user_id = $user_id;
+        $this->m=$m;
 
         $this->display();
     }
 
 
-        public    function search()
-        {
-            $this->display();
-        }
+    public function search()
+    {
+        $this->display();
+    }
 
 
     public function searchcheck()
@@ -434,6 +448,7 @@ class IndexController extends Controller
 
 
 
+
                 } else {
                     $this->error("请输入搜索内容", "/home/index/search");
                 }
@@ -448,11 +463,12 @@ class IndexController extends Controller
         $table = M("discuss");
         $content = M("content");
         $id = I("content_id");
+        $m=I("mokuai");
         if ($table->create()) {
             $table->created_at = date("Y-m-d H:i:s");
             $content->where("id= $id")->setInc('count', 1);
             $table->add();
-            $this->success("", "/home/index/tiezi/id/$id");
+            $this->success("", "/home/index/tiezi/id/$id/m/$m");
         } else {
             $this->error("error", "/home/index/discuss");
         }
@@ -509,5 +525,25 @@ class IndexController extends Controller
         $results = $info->where($condition)->select();
         $this->assign('res', $results);
         $this->display();
+    }
+    public function doubleDis()
+    {
+        $table=M("discuss");
+        $tieziid=I("tid");
+        $parentid=I("parient_id");
+        $discuss=I("discuss");
+        $m=I("m");
+        $table->user_id=$_SESSION["auth"]["id"];
+        $table->content_id= $tieziid;
+        $table->content=$discuss;
+        $table->parentid=$parentid;
+        $table->created_at=date("Y-m-d H:i:s");
+         $xx= $table->add();
+        if($xx){
+            header("location:/home/index/tiezi/id/ $tieziid/m/$m");
+        } else {
+            $this->error("错误","/home/index/tiezi/id/ $tieziid/m/$m");
+        }
+
     }
 }
