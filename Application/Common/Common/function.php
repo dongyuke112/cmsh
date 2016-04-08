@@ -135,10 +135,10 @@ function zengjia()
 function jinri($m=1)
 {
     $table =M("content");
-    $date = date();
+    $date = date("Y-m-d");
     $arr =[
         "mokuai"=>$m,
-        "created_at"=>["like","%$date%"],
+        "created_at"=>$date,
     ];
     $result=$table->where($arr)->count();
     echo "今日：";
@@ -198,3 +198,12 @@ function mkimg()
             return false;
         }
     }
+
+
+function value() {
+    if(isset($_GET["m"]))
+    {
+        $m=$_GET["m"];
+    }
+      echo $m;
+}

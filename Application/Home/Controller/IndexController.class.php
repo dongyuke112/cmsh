@@ -214,7 +214,7 @@ class IndexController extends Controller
         $table->created_at = date("Y-m-d H:i:s");
         $xx = $table->add();
         if ($xx) {
-            $this->success("", "/home/index/mengpailist/m/$m");
+            $this->success("", "/home/index/tiezi/id/$xx/m/$m");
         } else {
             $this->error("", "/home/index/fatie");
         }
