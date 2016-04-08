@@ -130,7 +130,15 @@ class AdminController extends Controller
             if ($s) {
                 $arr["title"] = ["like", "%$s%"];
             }
-        $this->result= $table->where($arr)->select();
+        $this->result= $table->field("lt_content.id as tzid,lt_content.title,lt_content.created_at,lt_user
+        .username")
+            ->join
+        ("lt_user on
+        lt_content.user_id
+        =lt_user
+        .id")->where
+        ($arr)
+            ->select();
         $this->display();
     }
 

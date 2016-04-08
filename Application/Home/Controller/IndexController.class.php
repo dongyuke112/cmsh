@@ -209,13 +209,14 @@ class IndexController extends Controller
     public function fatiesave()
     {
         $table = M("content");
+        $m= I("mokuai");
         $table->create();
         $table->created_at = date("Y-m-d H:i:s");
         $xx = $table->add();
         if ($xx) {
-            $this->success("", "/home/index/index");
+            $this->success("", "/home/index/mengpailist/m/$m");
         } else {
-            $this->error("", "/home/index/index");
+            $this->error("", "/home/index/fatie");
         }
     }
 
