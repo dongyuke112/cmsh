@@ -209,6 +209,14 @@ class AdminController extends Controller
           $this->success("","/home/admin/addperm");
 
     }
+    public function showperm ()
+    {
+        $table=M("perm");
+       $perm= $table->select();
+
+        $this->display();
+    }
+
 
 
 }
