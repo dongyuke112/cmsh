@@ -3,7 +3,7 @@
     <div class="panel col-md-8 col-md-offset-2">
         <div class="panel-heading">展示用户信息</div>
         <div class="panel-body">
-            <form action="/home/index/userinfosave" method="post" class="form-horizontal" data-toggle="validator">
+            <form action="/home/index/userinfosaves" method="post" class="form-horizontal" data-toggle="validator">
                 <input type="hidden" name="user_id" value="{:lt_id()}"/>
                 <div class="form-group">
                     <label class="control-label col-md-3 ">姓名</label>
@@ -65,6 +65,12 @@
                                    required="required"/>
                         </div>
                     </volist>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" >头像</label>
+                    <div class="col-md-9">
+                        <input type="file" name="name">
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-3">

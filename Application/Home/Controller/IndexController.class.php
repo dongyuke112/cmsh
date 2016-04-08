@@ -12,8 +12,8 @@ class IndexController extends Controller
 {
     public function index()
     {
-
         $this->display();
+
     }
 
     public function regiest()
@@ -131,6 +131,7 @@ class IndexController extends Controller
 
     public function userinfosave()
     {
+
         $image = new Upload();
         $image->mimes = [
             "image/jpeg", "image/png", "image/gif", "image/bmp"
@@ -170,6 +171,24 @@ class IndexController extends Controller
         }
 
 
+    }
+    public function userinfosaves()
+    {
+        $this->success("保存成功","/home/index/index");
+       /* $image = new Upload();
+        $image->mimes = [
+            "image/jpeg", "image/png", "image/gif", "image/bmp"
+        ];
+        $image->exts = [
+            "jpg", "jpeg", "png", "bmp"
+        ];
+        $e = $image->uploadone($_FILES["name"]);
+        $savename = $e['savename'];
+        $savepath = $e['savepath'];
+        $thumb = new Image();
+        $thumb->open("Uploads/$savepath$savename");
+        $thumb->thumb(120, 120, \Think\Image::IMAGE_THUMB_FILLED)->save("Uploads/{$savepath}s$savename");
+        $user_path = "/Uploads/{$savepath}s$savename";*/
     }
 
 
@@ -349,6 +368,7 @@ class IndexController extends Controller
 
             $xx[] = $items;
         }
+
 
 
         $this->result = $xx;
