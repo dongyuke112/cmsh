@@ -49,6 +49,15 @@ function auuth()
         exit;
     }
 }
+function tiaozhuan(){
+    if(!$_SESSION["auth"]){
+       return false;
+    } else {
+        return true;
+    }
+
+
+}
 function mengpai()
 {
     if(isset($_GET["m"]))

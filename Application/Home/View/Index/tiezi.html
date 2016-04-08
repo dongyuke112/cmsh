@@ -7,25 +7,22 @@
     </ul>
 </div>
 <div class="row">
-    <div class="col-md-2 ye-first-border">
+    <div class="col-md-2 ye-first-border ye1_height">
         <div class="col-md-12 " >
             <a href="/home/index/fatie"><img src="IMAGE_PATH/fatie.png" class="ye_image"/></a>
-            <a href="/home/index/discuss/id/{$ids.id}"><img src="IMAGE_PATH/huifu.png" class="ye_image"/></a>
+            <a href="/home/index/discuss/id/{$ids.id}/m/{$m}"><img src="IMAGE_PATH/huifu.png" class="ye_image"/></a>
 
         </div>
-        <div class="col-md-12 ye_borders">
-            回复数：
+        <div class="col-md-12 ye_borders ">
+            回复数：{$ids.count}
         </div>
         <div>发帖人：{$user.username}</div>
         <div><img src="{$imagepath}"/></div>
     </div>
-    <div class="col-md-8 ye-first-border">
-      <span>发表于：{$result.created_at}</span>
+    <div class="col-md-8 ye-first-border ye2_height">
+      <span>发表于：{$ids.created_at}</span>
         <div class="col-md-12">{$content}</div>
-        <div class="ye_buttom col-md-10">
-            <input name="discuss"  class="form-control" />
-        </div>
-        <div class="col-md-2"><button type="button" class="btn" id="submit">快捷回复</button></div>
+
     </div>
 
 </div>
@@ -35,7 +32,37 @@
             <div class="col-md-12 ye_border_second">{$discuss.username}</div>
             <div class="col-md-12 ye_border_second"><img src="{$discuss.imagepath}"/></div>
         </div>
-        <div class="col-md-10 discuss ye_border_second">{$discuss.content}</div>
+        <div class="col-md-10 discuss ye_border_second">
+            <div>回复时间:{$discuss.created_at}</div>
+           <div>{$discuss.content}</div>
+        </div>
+
+        <div class="col-md-10 col-md-offset-2 text-right">
+            {:tiaozhuan()?'<button type="button"  class="btn toggle" >评论</button>':'未登录不能回复<a href="/home/index/login">登录</a>'}
+
+        </div>
+        <div class="col-md-6 col-md-offset-6 huifu text-center discusss" style="display: none">
+           <volist name="discuss.discuss" id="item">
+               <div class="col-md-10 col-md-offset-2">
+                   <div class="col-md-2  touxiang" ><img src="{$item.imagepath} " width="20px" height="20px"/></div>
+                   <div class="col-md-6  neirong"> {$item.content}</div>
+                   <div class="col-md-4 shijian"> 时间:{$item.created_at}</div>
+               </div>
+
+
+
+
+           </volist>
+
+            <form action="/home/index/doubledis" method="post">
+                <input type="hidden" name="parient_id" value="{$discuss.id}">
+                <input type="hidden" name="m" value="{$m}">
+                <input type="hidden" name="tid" value="{$ids.id}">
+                <div class="col-md-8"><input type="text" class="form-control" name="discuss" placeholder="我也说几句"></div>
+                <div class="col-md-4"> <input type="submit" value="评论" class="form-control"></div>
+
+            </form>
+        </div>
     </div>
 </volist>
 <div class="row">
@@ -45,6 +72,8 @@
     .row
     {
         background-color: white;
+        border-bottom: 1px solid rgb(235,235,235);
+        border-top: 1px solid rgb(235,235,235);
     }
     .ye_image
     {
@@ -57,13 +86,9 @@
     .ye-first-border
     {
         border-right: 1px solid rgb(235,235,235);
-        height: auto;
         border-bottom: 1px solid rgb(235,235,235);
     }
-    .ye_buttom
-    {
-        margin-bottom: 5px;
-    }
+
     .discuss
     {
         margin-top: 10px;
@@ -72,5 +97,23 @@
     {
         border:1px solid rgb(235,235,235);
     }
+    .dibu
+    {
+        margin-bottom: 1px;
+    }
+    .discusss{
+        background-color: rgb(235,235,235);
+        font-size: 11px;
+        margin-top: 5px;
+    }
+   .touxiang,.shijian,.neirong
+   {
+       margin-top: 5px;
+   }
 </style>
-<script ></script>
+<script type="text/javascript" >
+
+$(".toggle").on("click",function(){
+   $(".huifu").toggle();
+})
+</script>
