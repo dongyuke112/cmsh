@@ -567,4 +567,16 @@ class IndexController extends Controller
         }
 
     }
+
+    public  function  tests()
+    {
+        $table = M("content");
+
+        $title=I("title");
+
+        $res = $table->where("title='$title'")->count();
+       echo $res ? 'true' : 'false';
+
+    }
+
 }
