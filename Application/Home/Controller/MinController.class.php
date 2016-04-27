@@ -34,4 +34,10 @@ class MinController extends Controller{
             $this->error('失败','/home/min/show_user');
         }
     }
+
+    public function show()
+    {
+        layout(false);
+        $this->display();
+    }
 }
