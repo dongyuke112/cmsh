@@ -40,4 +40,6 @@ class MinController extends Controller{
         layout(false);
         $this->display();
     }
+
+
 }
